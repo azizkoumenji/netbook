@@ -1,0 +1,50 @@
+@import "../../variables.scss";
+
+.leftbar {
+  background-color: var(--background-dark);
+  border: 1px solid var(--background-border);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 10px;
+  gap: 10px;
+  width: 250px;
+  height: fit-content;
+  position: sticky;
+  top: 85px;
+  margin-left: 10px;
+
+  img {
+    width: 30px;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+
+    a {
+      text-decoration: none;
+      color: var(--text-dark);
+    }
+
+    i {
+      font-size: 23px;
+    }
+  }
+
+  .shortcuts {
+    font-weight: bold;
+    font-size: large;
+    margin: 15px 0px;
+  }
+
+  .user {
+    img {
+      border-radius: 50%;
+      height: 30px;
+      object-fit: cover;
+    }
+  }
+}

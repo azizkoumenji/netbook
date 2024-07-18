@@ -1,13 +1,15 @@
+@import "../../variables.scss";
+
 .login {
-  background-color: #FAFAFA;
+  background-color: var(--background-light);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 
   .card {
-    background-color: #EFEFEF;
-    border: 1px solid #EAEAEA;
+    background-color: var(--background-dark);
+    border: 1px solid var(--background-border);
     border-radius: 15px;
     width: fit-content;
     padding: 50px;
@@ -20,29 +22,30 @@
 
     h1 {
       font-size: 50px;
-      color: #3E3E3E;
+      color: var(--text-dark);
     }
 
     input {
       border-radius: 5px;
-      height: 25px;
+      height: 30px;
       width: 200px;
-      background-color: #FAFAFA;
-      border: 1px solid #EAEAEA;
+      background-color: var(--background-inside);
+      border: 1px solid var(--background-border);
       outline: none;
+      padding: 10px;
     }
 
     button {
-      background-color: #0094FF;
-      border: 1px solid #2BA7FF;
+      background-color: var(--blue);
+      border: 1px solid var(--border-blue);
       padding: 5px 20px;
       border-radius: 5px;
-      color: #005BC6;
+      color: var(--text-blue);
       cursor: pointer;
     }
 
     p {
-      color: #B7B7B7;
+      color: var(--text-light);
       margin-top: -2px;
     }
   }

@@ -1,0 +1,94 @@
+@import "../../variables.scss";
+
+.navbar {
+  display: flex;
+  background-color: var(--background-dark);
+  margin: 10px;
+  border: 1px solid var(--background-border);
+  border-radius: 10px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 10px;
+  color: var(--text-dark);
+  position: sticky;
+  top: 10px;
+  height: 55px;
+
+  .left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+
+    .logo {
+
+      text-decoration: none;
+
+      h1 {
+        font-size: 20px;
+        color: var(--text-dark);
+      }
+
+
+    }
+
+    i {
+      cursor: pointer;
+    }
+
+  }
+
+  .search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background-inside);
+    padding: 5px;
+    border: 1px solid var(--background-border);
+    border-radius: 5px;
+
+    i {
+      color: var(--text-light);
+    }
+
+    input {
+      border: none;
+      background-color: var(--background-inside);
+      outline: none;
+      color: var(--text-light);
+
+      &::placeholder {
+        color: var(--text-light);
+      }
+    }
+  }
+
+  .right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    img {
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    span {
+      cursor: pointer;
+    }
+
+    button {
+      background-color: var(--red);
+      border: 1px solid var(--border-red);
+      border-radius: 10px;
+      color: var(--text-red);
+      padding: 7px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+  }
+}

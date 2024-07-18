@@ -1,10 +1,10 @@
-import LeftBar from "../components/leftbar/LeftBar";
-import NavBar from "../components/navbar/NavBar";
-import RightBar from "../components/rightbar/RightBar";
-import Home from "../pages/home/Home";
-import Login from "../pages/login/Login";
-import Profile from "../pages/profile/Profile";
-import Register from "../pages/register/Register";
+import LeftBar from "./components/leftbar/LeftBar";
+import NavBar from "./components/navbar/NavBar";
+import RightBar from "./components/rightbar/RightBar";
+import Home from "./pages/home/Home";
+import Login from "./pages/login/Login";
+import Profile from "./pages/profile/Profile";
+import Register from "./pages/register/Register";
 import PropTypes from "prop-types";
 import {
   createBrowserRouter,
@@ -29,10 +29,10 @@ function App() {
   const Layout = () => (
     <>
       <NavBar />
-      <div style={{ display: "flex" }}>
-        <RightBar />
-        <Outlet />
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         <LeftBar />
+        <Outlet />
+        <RightBar />
       </div>
     </>
   );
