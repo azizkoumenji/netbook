@@ -2,7 +2,6 @@
 
 .leftbar {
   background-color: var(--background-dark);
-  border: 1px solid var(--background-border);
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -13,6 +12,7 @@
   position: sticky;
   top: 85px;
   margin-left: 10px;
+  flex-grow: 1;
 
   img {
     width: 30px;

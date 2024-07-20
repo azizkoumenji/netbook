@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import LeftBar from "./components/leftbar/LeftBar";
 import NavBar from "./components/navbar/NavBar";
 import RightBar from "./components/rightbar/RightBar";
@@ -12,9 +13,10 @@ import {
   Outlet,
   Navigate,
 } from "react-router-dom";
+import { AuthContext } from "./context/authContext";
 
 function App() {
-  const currentUser = true;
+  const { currentUser } = useContext(AuthContext);
 
   // Navigate to login page when user not logged in (wrapped with Layout component in router).
   const ProtectedRoute = ({ children }) => {

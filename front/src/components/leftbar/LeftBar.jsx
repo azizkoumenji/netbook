@@ -3,13 +3,17 @@ import X from "./logos/x-logo.png";
 import YouTube from "./logos/youtube-logo.png";
 import Reddit from "./logos/reddit-logo.png";
 import LinkedIn from "./logos/linkedin-logo.png";
+import { AuthContext } from "../../context/authContext";
+import { useContext } from "react";
 
 export default function LeftBar() {
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <div className="leftbar">
       <div className="user">
-        <img src="" alt="User Image" />
-        <span>User Name</span>
+        <img src={currentUser.img} alt="User Image" />
+        <span>{currentUser.name}</span>
       </div>
       <div className="friends">
         <i className="bi bi-people-fill"></i>

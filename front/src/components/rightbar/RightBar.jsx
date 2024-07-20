@@ -19,8 +19,9 @@ export default function RightBar() {
           <div className="user-info">
             <img src="" alt="User Image" />
             <span>User Name</span>
+            <span className="description">posted an image</span>
           </div>
-          <span className="description">Posted an image.</span>
+
           <span className="description">1 min ago</span>
         </div>
       </div>

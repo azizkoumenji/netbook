@@ -12,7 +12,10 @@ export default function Register() {
         <input type="text" placeholder="Name" />
         <button>Register</button>
         <p>
-          Already have an account? <Link to="/login">Login.</Link>
+          Already have an account?{" "}
+          <Link className="link" to="/login">
+            Login
+          </Link>
         </p>
       </div>
     </div>

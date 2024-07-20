@@ -9,7 +9,6 @@
 
   .card {
     background-color: var(--background-dark);
-    border: 1px solid var(--background-border);
     border-radius: 15px;
     width: fit-content;
     padding: 25px;
@@ -31,23 +30,31 @@
       height: 30px;
       width: 200px;
       background-color: var(--background-inside);
-      border: 1px solid var(--background-border);
       outline: none;
-      padding: 10px
+      padding: 10px;
+      color: var(--text-dark);
+      border: none;
+      font-family: "Inter",
+        sans-serif;
     }
 
     button {
       background-color: var(--blue);
-      border: 1px solid var(--border-blue);
       padding: 5px 20px;
       border-radius: 5px;
-      color: #005BC6;
+      color: var(--text-blue-button);
       cursor: pointer;
+      border: none;
     }
 
     p {
       color: var(--text-light);
       margin-top: -2px;
+
+      .link {
+        color: var(--blue);
+        text-decoration: none;
+      }
     }
   }
 }

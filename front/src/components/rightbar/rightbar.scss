@@ -9,6 +9,7 @@
   position: sticky;
   top: 85px;
   margin-right: 10px;
+  flex-grow: 1;
 
   .suggestions,
   .activities,
@@ -17,7 +18,6 @@
     flex-direction: column;
     gap: 10px;
     background-color: var(--background-dark);
-    border: 1px solid var(--background-border);
     border-radius: 10px;
     padding: 20px;
 
@@ -57,15 +57,16 @@
 
       button {
         background-color: var(--blue);
-        border: 1px solid var(--border-blue);
-        border-radius: 10px;
+        border-radius: 5px;
         padding: 5px 10px;
-        color: var(--text-blue);
+        color: var(--text-blue-button);
         cursor: pointer;
+        border: none;
       }
 
       .description {
         color: var(--text-light);
+        font-size: 15px;
       }
     }
   }

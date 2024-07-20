@@ -1,24 +1,21 @@
 :root {
   --background-light: #FFFFFF;
-  --background-dark: #F6F6F6;
-  --background-border: #F1F1F1;
-  --background-inside: #E8E8E8;
+  --background-dark: #F5F5F7;
+  --background-inside: #EBEBEB;
   --text-dark: #3E3E3E;
   --text-light: #B7B7B7;
   --blue: #0094FF;
-  --border-blue: #2BA7FF;
-  --text-blue: #005BC6;
+  --text-blue-button: #ECECEC;
+  --text-blue: #0094FF;
   --green: #5DD400;
   --red: #FF5151;
-  --border-red: #FF7171;
-  --text-red: #C10000;
+  --text-red-button: #C10000;
 }
 
 [theme="dark"] {
   --background-light: #000000;
   --background-dark: #161616;
-  --background-border: #212121;
   --background-inside: #242424;
-  --text-dark: #EEEEEE;
+  --text-dark: #ECECEC;
   --text-light: #636363;
 }
