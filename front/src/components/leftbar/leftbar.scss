@@ -13,6 +13,7 @@
   top: 85px;
   margin-left: 10px;
   flex-grow: 1;
+  flex-shrink: 0;
 
   img {
     width: 30px;
@@ -48,3 +49,23 @@
     }
   }
 }
+
+@media (max-width: 640px) {
+  .leftbar {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .leftbar {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {}
+
+@media (max-width: 1280px) {}
+
+@media (max-width: 1536px) {}
+
+@media (min-width: 1536px) {}

@@ -6,6 +6,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  margin: 10px;
 
   .card {
     background-color: var(--background-dark);
@@ -54,6 +55,16 @@
       .link {
         color: var(--blue);
         text-decoration: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .register {
+    .card {
+      h1 {
+        font-size: 30px;
       }
     }
   }
