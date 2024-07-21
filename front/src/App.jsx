@@ -31,7 +31,13 @@ function App() {
   const Layout = () => (
     <>
       <NavBar />
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "start",
+        }}
+      >
         <LeftBar />
         <Outlet />
         <RightBar />
