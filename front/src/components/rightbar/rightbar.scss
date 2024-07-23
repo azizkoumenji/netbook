@@ -1,4 +1,4 @@
-@import "../../variables.scss";
+@import "../../theme.scss";
 
 .rightbar {
   display: flex;
@@ -10,7 +10,6 @@
   top: 75px;
   margin-right: 10px;
   flex-grow: 1;
-  flex-shrink: 0;
 
   .suggestions,
   .activities,

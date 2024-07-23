@@ -1,4 +1,4 @@
-@import "../../variables.scss";
+@import "../../theme.scss";
 
 .leftbar {
   background-color: var(--background-dark);
@@ -13,7 +13,6 @@
   top: 75px;
   margin-left: 10px;
   flex-grow: 1;
-  flex-shrink: 0;
   border: 1px solid var(--border);
 
   img {
