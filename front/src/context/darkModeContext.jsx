@@ -4,16 +4,7 @@ import PropTypes from "prop-types";
 export const DarkModeContext = createContext();
 
 export const DarkModeContextProvider = ({ children }) => {
-  DarkModeContextProvider.propTypes = {
-    children: PropTypes.node.isRequired,
-  };
-  const [theme, setTheme] = useState(
-    localStorage.getItem("theme")
-      ? localStorage.getItem("theme")
-      : window.matchMedia("prefers-color-scheme: dark")
-      ? "dark"
-      : "light"
-  );
+  const [theme, setTheme] = useState(localStorage.getItem("theme"));
 
   useEffect(() => {
     document.body.setAttribute("theme", theme);
@@ -30,4 +21,8 @@ export const DarkModeContextProvider = ({ children }) => {
       {children}
     </DarkModeContext.Provider>
   );
+};
+
+DarkModeContextProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };

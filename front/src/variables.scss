@@ -1,4 +1,4 @@
-:root {
+body {
   --background-light: #FFFFFF;
   --background-dark: #F5F5F7;
   --background-inside: #EBEBEB;
@@ -13,11 +13,32 @@
   --text-red-button: #ECECEC;
 }
 
+@media (prefers-color-scheme: dark) {
+  body {
+    --background-light: #000000;
+    --background-dark: #0D0D0D;
+    --background-inside: #1C1C1C;
+    --border: #212121;
+    --text-dark: #ECECEC;
+    --text-light: #636363;
+  }
+}
+
+
 [theme="dark"] {
-  --background-light: #000000;
-  --background-dark: #0D0D0D;
-  --background-inside: #1C1C1C;
-  --border: #212121;
-  --text-dark: #ECECEC;
-  --text-light: #636363;
+  --background-light: #000000 !important;
+  --background-dark: #0D0D0D !important;
+  --background-inside: #1C1C1C !important;
+  --border: #212121 !important;
+  --text-dark: #ECECEC !important;
+  --text-light: #636363 !important;
+}
+
+[theme="light"] {
+  --background-light: #FFFFFF !important;
+  --background-dark: #F5F5F7 !important;
+  --background-inside: #EBEBEB !important;
+  --border: #E8E8E8 !important;
+  --text-dark: #3E3E3E !important;
+  --text-light: #B7B7B7 !important;
 }
