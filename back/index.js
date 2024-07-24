@@ -7,11 +7,15 @@ import commentsRouter from "./routes/comments.js";
 import authRouter from "./routes/auth.js";
 import uploadsRouter from "./routes/uploads.js";
 import db from "./db.js";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app = express();
 
 app.use(express.static("dist"));
 app.use(express.json());
+app.use(cookieParser());
+app.use(cors());
 
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
