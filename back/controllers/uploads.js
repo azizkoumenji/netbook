@@ -1,7 +1,10 @@
 import path from "path";
 import { fileURLToPath } from "url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  ".."
+);
 
 export const upload = (req, res) => {
   res.status(200).json("Image uploaded!");
