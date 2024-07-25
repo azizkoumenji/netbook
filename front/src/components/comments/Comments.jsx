@@ -27,7 +27,7 @@ export default function Comments() {
   return (
     <div className="comments">
       <div className="write">
-        <img src={currentUser.img} alt="" />
+        <img src={currentUser.profile_pic} alt="" />
         <textarea type="text" placeholder="Write a comment" />
         <button>Send</button>
       </div>

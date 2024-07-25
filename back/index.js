@@ -8,21 +8,19 @@ import authRouter from "./routes/auth.js";
 import uploadsRouter from "./routes/uploads.js";
 import db from "./db.js";
 import cookieParser from "cookie-parser";
-import cors from "cors";
 
 const app = express();
 
 app.use(express.static("dist"));
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
 
-app.use("/users", usersRouter);
-app.use("/posts", postsRouter);
-app.use("likes", likesRouter);
-app.use("/comments", commentsRouter);
-app.use("/auth", authRouter);
-app.use("/uploads", uploadsRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/posts", postsRouter);
+app.use("/api/likes", likesRouter);
+app.use("/api/comments", commentsRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/uploads", uploadsRouter);
 
 app.listen(8800, () => {
   console.log("Express server connected!");

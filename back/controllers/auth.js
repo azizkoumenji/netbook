@@ -20,8 +20,8 @@ export const register = (req, res) => {
     const q =
       "insert into users (name, username, email, password, birthday, cover_pic, profile_pic) values (?, ?, ?, ?, ?, ?, ?)";
 
-    const profilePic = process.env.SERVER_ADDRESS + "/uploads/profile.png";
-    const coverPic = process.env.SERVER_ADDRESS + "/uploads/cover.png";
+    const profilePic = "/api/uploads/profile.png";
+    const coverPic = "/api/uploads/cover.png";
 
     db.query(
       q,

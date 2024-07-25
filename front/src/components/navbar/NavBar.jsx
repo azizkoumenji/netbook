@@ -27,7 +27,7 @@ export default function NavBar() {
         <input type="text" placeholder="Search" />
       </div>
       <div className="right">
-        <img src={currentUser.img} alt="User Image" />
+        <img src={currentUser.profile_pic} alt="User Image" />
         <span>{currentUser.name}</span>
         <button>Logout</button>
       </div>

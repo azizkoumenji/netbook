@@ -14,6 +14,9 @@ import {
   Navigate,
 } from "react-router-dom";
 import { AuthContext } from "./context/authContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -29,7 +32,7 @@ function App() {
   };
 
   const Layout = () => (
-    <>
+    <QueryClientProvider client={queryClient}>
       <NavBar />
       <div
         style={{
@@ -42,7 +45,7 @@ function App() {
         <Outlet />
         <RightBar />
       </div>
-    </>
+    </QueryClientProvider>
   );
 
   const router = createBrowserRouter([

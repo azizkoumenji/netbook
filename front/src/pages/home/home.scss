@@ -7,4 +7,69 @@
   margin-top: 20px;
   flex-grow: 2;
 
+  .write-post {
+    background-color: var(--background-dark);
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+
+    .top {
+      display: flex;
+      gap: 10px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      margin-bottom: 5px;
+
+      img {
+        height: 30px;
+        width: 30px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+
+      textarea {
+        width: 100%;
+        height: 75px;
+        resize: none;
+        font-family: "Inter", sans-serif;
+        padding: 5px;
+        border-radius: 5px;
+        border: none;
+        background-color: var(--background-dark);
+        outline: none;
+        color: var(--text-dark);
+      }
+    }
+
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+
+      .image {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+
+        span {
+          font-size: 12px;
+        }
+
+      }
+
+      button {
+        background-color: var(--blue);
+        color: var(--text-blue-button);
+        border: none;
+        padding: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
+  }
+
 }
