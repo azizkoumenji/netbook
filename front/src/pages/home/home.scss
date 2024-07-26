@@ -77,13 +77,15 @@
     flex-direction: column;
     align-items: center;
 
+    // Start loader.
+
     .loader {
       transform: rotateZ(45deg);
       perspective: 1000px;
       border-radius: 50%;
       width: 20px;
       height: 20px;
-      color: var(--text-inside);
+      color: var(--text-light);
     }
 
     .loader:before,
@@ -162,6 +164,7 @@
       }
     }
 
+    // End loader.
 
     .message {
       color: var(--text-light);

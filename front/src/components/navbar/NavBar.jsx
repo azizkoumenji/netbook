@@ -29,7 +29,9 @@ export default function NavBar() {
       <div className="right">
         <img src={currentUser.profile_pic} alt="User Image" />
         <span>{currentUser.name}</span>
-        <button>Logout</button>
+        <button>
+          <i className="bi bi-door-open-fill"></i> Logout
+        </button>
       </div>
     </div>
   );

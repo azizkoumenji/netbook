@@ -33,7 +33,7 @@ export default function Home() {
       </div>
       <div className="posts">
         {error ? (
-          <span className="message">An error has occured</span>
+          <span className="message">Something went wrong :(</span>
         ) : isLoading ? (
           <div className="loader"></div>
         ) : (

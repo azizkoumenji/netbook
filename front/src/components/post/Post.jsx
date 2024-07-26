@@ -33,7 +33,7 @@ export default function Post({ post }) {
         </div>
       </div>
       <div className="content">
-        <span>{post.desc}</span>
+        <span>{post.description}</span>
         {post.img && <img src={post.img} alt="Post Image"></img>}
       </div>
       <div className="reactions">
@@ -47,7 +47,7 @@ export default function Post({ post }) {
         </div>
         <div className="comment" onClick={handleComment}>
           <i className="bi bi-chat-left-dots"></i>
-          <span>{post.commentCount} Comment</span>
+          <span>{post.comment_count} Comment</span>
         </div>
       </div>
       {commentVisibility && <Comments />}
