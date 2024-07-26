@@ -7,6 +7,7 @@ export const AuthContextProvider = ({ children }) => {
   AuthContextProvider.propTypes = {
     children: PropTypes.node.isRequired,
   };
+
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );

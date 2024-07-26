@@ -8,7 +8,6 @@ import { useContext } from "react";
 
 export default function LeftBar() {
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser.profile_pic);
 
   return (
     <div className="leftbar">

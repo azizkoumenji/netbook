@@ -8,10 +8,12 @@ import axios from "axios";
 export default function Home() {
   const { currentUser } = useContext(AuthContext);
 
-  const { isLoading, error, data } = useQuery(["posts"], () => {
-    axios.get("/api/posts").then((res) => {
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["posts"],
+    queryFn: async () => {
+      const res = await axios.get("/api/posts");
       return res.data;
-    });
+    },
   });
 
   return (
@@ -30,9 +32,13 @@ export default function Home() {
         </div>
       </div>
       <div className="posts">
-        {data.map((post) => (
-          <Post post={post} key={post.id} />
-        ))}
+        {error ? (
+          <span className="message">An error has occured</span>
+        ) : isLoading ? (
+          <div className="loader"></div>
+        ) : (
+          data.map((post) => <Post post={post} key={post.id} />)
+        )}
       </div>
     </div>
   );
