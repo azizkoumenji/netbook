@@ -22,7 +22,7 @@ export default function Post({ post }) {
         <div className="left">
           <img src={post.profile_pic} alt="User Image" />
           <div className="name-time">
-            <Link className="name" to={`/profile/${post.userId}`}>
+            <Link className="name" to={`/profile/${post.user_id}`}>
               <span>{post.name}</span>
             </Link>
             <span>1 min ago</span>
