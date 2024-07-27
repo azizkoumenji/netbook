@@ -8,8 +8,7 @@ import axios from "axios";
 export default function Home() {
   const { currentUser } = useContext(AuthContext);
   const [img, setImg] = useState(null);
-  const [description, setDescription] = useState(null);
-  console.log(description);
+  const [description, setDescription] = useState("");
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["posts"],
@@ -31,7 +30,7 @@ export default function Home() {
   }); // This reruns the ["posts"] query when I add a new post so we can refresh our home posts.
 
   const handleSubmit = async () => {
-    if (description) {
+    if (description || img) {
       if (img) {
         const formData = new FormData();
         formData.append("img", img);
@@ -52,14 +51,19 @@ export default function Home() {
     <div className="home">
       <div className="write-post">
         <div className="top">
-          <img src={currentUser.profile_pic} alt="User Image" />
-          <textarea
-            placeholder="What's happening?"
-            value={description}
-            onChange={(e) => {
-              setDescription(e.target.value);
-            }}
-          ></textarea>
+          <div className="left">
+            <img src={currentUser.profile_pic} alt="User Image" />
+            <textarea
+              placeholder="What's happening?"
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+            ></textarea>
+          </div>
+          <div className="right">
+            {img && <img src={URL.createObjectURL(img)} alt="Upload Image" />}
+          </div>
         </div>
         <div className="bottom">
           <div className="image">
