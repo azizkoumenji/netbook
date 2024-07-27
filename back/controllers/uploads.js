@@ -7,7 +7,7 @@ const __dirname = path.resolve(
 );
 
 export const upload = (req, res) => {
-  res.status(200).json("Image uploaded!");
+  res.status(200).json(req.file.filename);
 };
 
 export const download = (req, res) => {
