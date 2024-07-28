@@ -1,28 +1,24 @@
 import { useContext } from "react";
 import "./comments.scss";
 import { AuthContext } from "../../context/authContext";
+import PropTypes from "prop-types";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import moment from "moment";
 
-export default function Comments() {
+export default function Comments({ postId }) {
   const { currentUser } = useContext(AuthContext);
-  const comments = [
-    {
-      id: 1,
-      comment: "Hjhkdfqhdkshfsf",
-      name: "User",
-      userId: 4,
-      profilePic:
-        "https://www.scusd.edu/sites/main/files/imagecache/tile/main-images/camera_lense_0.jpeg",
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["comments"],
+    queryFn: async () => {
+      try {
+        const res = await axios.get(`/api/comments/${postId}`);
+        return res.data;
+      } catch (err) {
+        console.log(err);
+      }
     },
-    {
-      id: 2,
-      comment:
-        "Hjhkdfqhdkffff fffffffffffffffff ffffffffffffff ffffffffffffffffff ffffffffffffffff fffffffffff fffffffffffff fffffffffffffff ffffffffffffffff ffffffffffffffffffshdf dffd df fdfd fddfertr ter tz ef sdfdsge sgt ztrtez tz etezt zt etzezt fsf",
-      name: "User",
-      userId: 4,
-      profilePic:
-        "https://www.scusd.edu/sites/main/files/imagecache/tile/main-images/camera_lense_0.jpeg",
-    },
-  ];
+  });
 
   return (
     <div className="comments">
@@ -31,18 +27,28 @@ export default function Comments() {
         <textarea type="text" placeholder="Write a comment" />
         <button>Send</button>
       </div>
-      {comments.map((comment) => (
-        <div className="comment" key={comment.id}>
-          <div className="content">
-            <img src={comment.profilePic} alt="User Image" />
-            <div className="name-comment">
-              <span className="name">{comment.name}</span>
-              <span>{comment.comment}</span>
+      {isLoading ? (
+        <div className="loader"></div>
+      ) : error ? (
+        <span className="error">Something went wrong :(</span>
+      ) : (
+        data.map((comment) => (
+          <div className="comment" key={comment.id}>
+            <div className="content">
+              <img src={comment.profile_pic} alt="User Image" />
+              <div className="name-comment">
+                <span className="name">{comment.name}</span>
+                <span>{comment.comment}</span>
+              </div>
             </div>
+            <span className="time">{moment(comment.date).fromNow()}</span>
           </div>
-          <span className="time">1 min ago</span>
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 }
+
+Comments.propTypes = {
+  postId: PropTypes.number.isRequired,
+};

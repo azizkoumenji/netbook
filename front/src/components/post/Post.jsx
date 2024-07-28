@@ -3,6 +3,7 @@ import "./post.scss";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import Comments from "../comments/Comments";
+import moment from "moment";
 
 export default function Post({ post }) {
   const [liked, setLiked] = useState(false);
@@ -25,7 +26,7 @@ export default function Post({ post }) {
             <Link className="name" to={`/profile/${post.user_id}`}>
               <span>{post.name}</span>
             </Link>
-            <span>1 min ago</span>
+            <span>{moment(post.date).fromNow()}</span>
           </div>
         </div>
         <div className="right">
@@ -50,7 +51,7 @@ export default function Post({ post }) {
           <span>{post.comment_count} Comment</span>
         </div>
       </div>
-      {commentVisibility && <Comments />}
+      {commentVisibility && <Comments postId={post.id} />}
     </div>
   );
 }
