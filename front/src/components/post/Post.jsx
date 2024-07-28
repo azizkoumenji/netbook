@@ -48,7 +48,7 @@ export default function Post({ post }) {
         </div>
         <div className="comment" onClick={handleComment}>
           <i className="bi bi-chat-left-dots"></i>
-          <span>{post.comment_count} Comment</span>
+          <span>{post.comments} Comment</span>
         </div>
       </div>
       {commentVisibility && <Comments postId={post.id} />}

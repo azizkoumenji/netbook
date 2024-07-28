@@ -1,15 +1,16 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import "./comments.scss";
 import { AuthContext } from "../../context/authContext";
 import PropTypes from "prop-types";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import moment from "moment";
 
 export default function Comments({ postId }) {
   const { currentUser } = useContext(AuthContext);
+  const [comment, setComment] = useState("");
   const { isLoading, error, data } = useQuery({
-    queryKey: ["comments"],
+    queryKey: ["comments", postId],
     queryFn: async () => {
       try {
         const res = await axios.get(`/api/comments/${postId}`);
@@ -20,12 +21,45 @@ export default function Comments({ postId }) {
     },
   });
 
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async (comment) => {
+      if (comment.comment) {
+        try {
+          return await axios.post(`/api/comments/${postId}`, comment);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries(["comments", postId]);
+    },
+  });
+
   return (
     <div className="comments">
       <div className="write">
         <img src={currentUser.profile_pic} alt="" />
-        <textarea type="text" placeholder="Write a comment" />
-        <button>Send</button>
+        <textarea
+          type="text"
+          placeholder="Write a comment"
+          value={comment}
+          onChange={(e) => {
+            setComment(e.target.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            console.log({ comment: comment });
+            mutation.mutate({ comment: comment });
+            setComment("");
+          }}
+        >
+          Send
+        </button>
       </div>
       {isLoading ? (
         <div className="loader"></div>

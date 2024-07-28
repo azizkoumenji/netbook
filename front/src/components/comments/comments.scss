@@ -126,9 +126,14 @@
       .name-comment {
         display: flex;
         flex-direction: column;
+        background-color: var(--background-inside);
+        padding: 5px 15px;
+        border-radius: 10px;
 
         .name {
-          font-weight: 500;
+          font-weight: bold;
+          font-size: 12px;
+          padding-bottom: 5px;
         }
 
         span {
