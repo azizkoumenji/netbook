@@ -1,13 +1,26 @@
 import { Link } from "react-router-dom";
 import "./post.scss";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Comments from "../comments/Comments";
 import moment from "moment";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Post({ post }) {
   const [liked, setLiked] = useState(false);
   const [commentVisibility, setCommentVisibility] = useState(false);
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["commentsCount", post.id],
+    queryFn: async () => {
+      try {
+        const res = await axios.get(`/api/comments/${post.id}`);
+        return res.data.length;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  });
 
   const handleLike = () => {
     setLiked(!liked);
@@ -48,7 +61,7 @@ export default function Post({ post }) {
         </div>
         <div className="comment" onClick={handleComment}>
           <i className="bi bi-chat-left-dots"></i>
-          <span>{post.comments} Comment</span>
+          <span>{data} Comment</span>
         </div>
       </div>
       {commentVisibility && <Comments postId={post.id} />}

@@ -36,6 +36,7 @@ export default function Comments({ postId }) {
 
     onSuccess: () => {
       queryClient.invalidateQueries(["comments", postId]);
+      queryClient.invalidateQueries(["commentsCount", postId]);
     },
   });
 
