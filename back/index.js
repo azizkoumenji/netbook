@@ -6,6 +6,8 @@ import postsRouter from "./routes/posts.js";
 import commentsRouter from "./routes/comments.js";
 import authRouter from "./routes/auth.js";
 import uploadsRouter from "./routes/uploads.js";
+import relationshipsRouter from "./routes/relationships.js";
+
 import db from "./db.js";
 import cookieParser from "cookie-parser";
 
@@ -21,6 +23,7 @@ app.use("/api/likes", likesRouter);
 app.use("/api/comments", commentsRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/uploads", uploadsRouter);
+app.use("/api/relationships", relationshipsRouter);
 
 app.listen(8800, () => {
   console.log("Express server connected!");

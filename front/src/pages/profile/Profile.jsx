@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Post from "../../components/post/Post";
 import "./profile.scss";
 import axios from "axios";
@@ -53,7 +53,26 @@ export default function Profile() {
 
   const { currentUser } = useContext(AuthContext);
 
-  const handleFollow = () => {};
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async (following) => {
+      try {
+        if (following)
+          return await axios.delete(`/api/relationships/${userId}`);
+        return await axios.post("/api/relationships/", { userId });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["user"]);
+    },
+  });
+
+  const handleFollow = () => {
+    mutation.mutate(relationshipData.includes(Number(userId)));
+  };
 
   return (
     <>
