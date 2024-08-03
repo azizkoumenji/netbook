@@ -6,7 +6,7 @@ import { AuthContext } from "../../context/authContext";
 
 export default function NavBar() {
   const { theme, toggleTheme } = useContext(DarkModeContext);
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, logout } = useContext(AuthContext);
 
   return (
     <div className="navbar">
@@ -19,7 +19,9 @@ export default function NavBar() {
         ) : (
           <i className="bi bi-moon-fill" onClick={toggleTheme}></i>
         )}
-        <i className="bi bi-house-fill"></i>
+        <Link to="/">
+          <i className="bi bi-house-fill"></i>
+        </Link>
         <i className="bi bi-chat-fill"></i>
       </div>
       <div className="search">
@@ -31,7 +33,7 @@ export default function NavBar() {
           <img src={currentUser.profile_pic} alt="User Image" />
           <span>{currentUser.name}</span>
         </Link>
-        <button>
+        <button onClick={logout}>
           <i className="bi bi-door-open-fill"></i> Logout
         </button>
       </div>
