@@ -5,6 +5,7 @@ import Reddit from "./logos/reddit-logo.png";
 import LinkedIn from "./logos/linkedin-logo.png";
 import { AuthContext } from "../../context/authContext";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 export default function LeftBar() {
   const { currentUser } = useContext(AuthContext);
@@ -12,8 +13,10 @@ export default function LeftBar() {
   return (
     <div className="leftbar">
       <div className="user">
-        <img src={currentUser.profile_pic} alt="User Image" />
-        <span>{currentUser.name}</span>
+        <Link to={`/profile/${currentUser.id}`} className="profile">
+          <img src={currentUser.profile_pic} alt="User Image" />
+          <span>{currentUser.name}</span>
+        </Link>
       </div>
       <div className="friends">
         <i className="bi bi-people-fill"></i>

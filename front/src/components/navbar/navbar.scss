@@ -70,15 +70,24 @@
     align-items: center;
     gap: 10px;
 
-    img {
-      height: 30px;
-      width: 30px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
+    .profile {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      margin: 0;
+      text-decoration: none;
 
-    span {
-      cursor: pointer;
+      img {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      span {
+        cursor: pointer;
+        color: var(--text-dark);
+      }
     }
 
     button {
@@ -89,6 +98,8 @@
       font-size: 15px;
       cursor: pointer;
       border: none;
+      display: flex;
+      gap: 2px;
     }
   }
 }
