@@ -37,6 +37,10 @@
       border: none;
       font-family: "Inter",
         sans-serif;
+
+      &::placeholder {
+        color: var(--text-light);
+      }
     }
 
     button {

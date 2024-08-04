@@ -11,9 +11,7 @@
   margin-right: 10px;
   flex-grow: 1;
 
-  .suggestions,
-  .activities,
-  .online {
+  .chat {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -51,31 +49,14 @@
           background-color: var(--green);
           position: absolute;
           top: 0;
-          left: 25px;
+          left: 23px;
 
         }
       }
 
-      button {
-        background-color: var(--blue);
-        border-radius: 5px;
-        padding: 5px 10px;
-        color: var(--text-blue-button);
-        cursor: pointer;
-        border: none;
-      }
-
-      .description {
-        color: var(--text-light);
-        font-size: 15px;
-      }
     }
   }
 
-  .suggestions {
-    display: flex;
-    flex-direction: column;
-  }
 }
 
 @media (max-width: 640px) {
