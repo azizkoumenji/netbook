@@ -3,9 +3,10 @@ import Post from "../../components/post/Post";
 import "./profile.scss";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import moment from "moment";
+import Update from "../../components/update/Update";
 
 export default function Profile() {
   const userId = useLocation().pathname.split("/")[2]; // useLocation().pathname returns our link.
@@ -74,8 +75,11 @@ export default function Profile() {
     mutation.mutate(relationshipData.includes(Number(userId)));
   };
 
+  const [showUpdate, setShowUpdate] = useState(false);
+
   return (
     <>
+      {showUpdate && <Update setShowUpdate={setShowUpdate} />}
       {isLoading || postsAreLoading ? (
         <div className="profile">
           <div className="loader"></div>
@@ -94,7 +98,7 @@ export default function Profile() {
             <div className="center">
               <span>{data.name}</span>
               {currentUser.id === data.id ? (
-                <button>Update</button>
+                <button onClick={() => setShowUpdate(true)}>Update</button>
               ) : (
                 <button onClick={handleFollow}>
                   {relationshipsAreLoading

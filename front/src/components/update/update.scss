@@ -1,0 +1,90 @@
+.background {
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  height: 100vh;
+  width: 100vw;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+
+  .card {
+    z-index: 4;
+    background-color: var(--background-dark);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+    width: 30%;
+
+    label {
+      font-weight: bold;
+
+      i {
+        font-size: 20px;
+      }
+
+
+      &:first-child,
+      &:nth-child(2) {
+        cursor: pointer;
+        font-weight: normal;
+        display: flex;
+        align-items: center;
+        align-self: center;
+        gap: 10px;
+      }
+
+
+    }
+
+
+    input {
+      background-color: var(--background-inside);
+      border: none;
+      padding: 5px;
+      border-radius: 5px;
+      color: var(--text-dark);
+      outline: none;
+      font-family: "Inter", sans-serif;
+
+      &::placeholder {
+        color: var(--text-light)
+      }
+    }
+
+    button {
+      background-color: var(--blue);
+      border-radius: 5px;
+      padding: 5px 10px;
+      color: var(--text-blue-button);
+      border: none;
+      width: 50%;
+      align-self: center;
+      margin-top: 10px;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .card {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 90%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .card {
+    width: 90%;
+  }
+}
