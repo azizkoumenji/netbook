@@ -39,3 +39,15 @@ export const updateUser = (req, res) => {
     );
   });
 };
+
+export const searchUsers = (req, res) => {
+  const searchKey = req.body.searchKey;
+
+  const q =
+    "select * from users where lower(name) like lower(?) or lower(username) like lower(?)";
+
+  db.query(q, [`${searchKey}%`, `${searchKey}%`], (err, data) => {
+    if (err) return res.status(500).json(err);
+    return res.status(200).json(data);
+  });
+};
