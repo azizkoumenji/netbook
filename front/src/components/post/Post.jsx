@@ -10,6 +10,7 @@ import { AuthContext } from "../../context/authContext";
 
 export default function Post({ post }) {
   const [commentVisibility, setCommentVisibility] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
   const {
     isLoading,
     error,
@@ -67,6 +68,24 @@ export default function Post({ post }) {
     setCommentVisibility(!commentVisibility);
   };
 
+  const deleteMutation = useMutation({
+    mutationFn: async (postId) => {
+      try {
+        return await axios.delete(`/api/posts/${postId}`);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["userPosts"]);
+      queryClient.invalidateQueries(["posts"]);
+    },
+  });
+
+  const handleDelete = () => {
+    deleteMutation.mutate(post.id);
+  };
+
   return (
     <div className="post">
       <div className="top">
@@ -79,9 +98,19 @@ export default function Post({ post }) {
             <span>{moment(post.date).fromNow()}</span>
           </div>
         </div>
-        <div className="right">
-          <i className="bi bi-three-dots"></i>
-        </div>
+        {post.user_id == currentUser.id && (
+          <div className="right">
+            <i
+              className="bi bi-three-dots"
+              onClick={() => setShowDelete(!showDelete)}
+            ></i>
+            {showDelete && (
+              <div className="delete" onClick={handleDelete}>
+                <i className="bi bi-trash3-fill"></i> Delete
+              </div>
+            )}
+          </div>
+        )}
       </div>
       <div className="content">
         <span>{post.description}</span>
