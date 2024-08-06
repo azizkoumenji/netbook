@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import "./navbar.scss";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { AuthContext } from "../../context/authContext";
 import axios from "axios";
@@ -49,15 +49,23 @@ export default function NavBar() {
         <Link to="/" className="logo">
           <h1>Netbook</h1>
         </Link>
+        <Link to="/">
+          <i className="bi bi-house-fill"></i>
+        </Link>
         {theme === "dark" ? (
           <i className="bi bi-sun-fill" onClick={toggleTheme}></i>
         ) : (
           <i className="bi bi-moon-fill" onClick={toggleTheme}></i>
         )}
-        <Link to="/">
-          <i className="bi bi-house-fill"></i>
+
+        <Link to="/chat" className="link">
+          <i className="bi bi-chat-fill"></i>
         </Link>
-        <i className="bi bi-chat-fill"></i>
+        <Link to="/friends" className="link">
+          <div className="friends">
+            <i className="bi bi-people-fill"></i>
+          </div>
+        </Link>
       </div>
       <div className="search">
         <i className="bi bi-search"></i>

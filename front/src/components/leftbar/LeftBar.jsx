@@ -18,14 +18,24 @@ export default function LeftBar() {
           <span>{currentUser.name}</span>
         </Link>
       </div>
-      <div className="friends">
-        <i className="bi bi-people-fill"></i>
-        <span>Friends</span>
-      </div>
-      <div className="messages">
-        <i className="bi bi-chat-fill"></i>
-        <span>Messages</span>
-      </div>
+      <Link
+        to="/friends"
+        style={{ textDecoration: "none", color: "var(--text-dark)" }}
+      >
+        <div className="friends">
+          <i className="bi bi-people-fill"></i>
+          <span>Friends</span>
+        </div>
+      </Link>
+      <Link
+        to="/chat"
+        style={{ textDecoration: "none", color: "var(--text-dark)" }}
+      >
+        <div className="messages">
+          <i className="bi bi-chat-fill"></i>
+          <span>Messages</span>
+        </div>
+      </Link>
       <span className="shortcuts">Shortcuts</span>
       <div className="youtube">
         <img src={YouTube} alt="Youtube" />

@@ -53,6 +53,7 @@
     border-radius: 5px;
     gap: 5px;
     position: relative;
+    margin: 0px 10px;
 
     .search-results {
       position: absolute;
@@ -116,6 +117,7 @@
       flex-direction: row;
       margin: 0;
       text-decoration: none;
+      padding: 0;
 
       img {
         height: 30px;
@@ -145,6 +147,10 @@
 }
 
 @media (max-width: 640px) {
+  .logo {
+    display: none;
+  }
+
   .navbar {
     .left {
       position: relative;
@@ -155,23 +161,31 @@
     }
   }
 
-  .bi-house-fill {
-    display: none;
-  }
-
   .right {
     span {
       display: none;
+    }
+
+    .profile {
+      padding: 0px;
     }
   }
 }
 
 @media (max-width: 768px) {}
 
-@media (max-width: 1024px) {}
+@media (min-width: 1024px) {
+  .navbar {
+    .bi-chat-fill {
+      display: none;
+    }
 
-@media (max-width: 1280px) {}
+    .bi-house-fill {
+      display: none;
+    }
 
-@media (max-width: 1536px) {}
-
-@media (min-width: 1536px) {}
+    .bi-people-fill {
+      display: none;
+    }
+  }
+}
