@@ -12,6 +12,9 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import chatRouter from "./routes/chat.js";
 import messagesRouter from "./routes/message.js";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 
@@ -33,6 +36,30 @@ mongoose
   .connect(process.env.MONGODB_LINK)
   .then(() => {
     console.log("Connected to MongoDB!");
+
+    // Create uploads directory if it doesn't exist and add cover and profile images.
+    const __dirname = path.resolve(
+      path.dirname(fileURLToPath(import.meta.url))
+    );
+    const uploadsPath = path.join(__dirname, "uploads");
+    if (!fs.existsSync(uploadsPath)) {
+      fs.mkdirSync(uploadsPath);
+    }
+    const imagesPath = path.join(__dirname, "images");
+    fs.readdir(imagesPath, (err, files) => {
+      if (err) {
+        console.log("Error copying images.");
+        console.log(err);
+      } else {
+        files.forEach((file) => {
+          const srcPath = path.join(imagesPath, file);
+          const destPath = path.join(uploadsPath, file);
+
+          fs.copyFileSync(srcPath, destPath);
+        });
+      }
+    });
+
     app.listen(process.env.EXPRESS_PORT, () => {
       console.log("Express server connected!");
       db.connect((err) => {
