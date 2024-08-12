@@ -8,12 +8,11 @@ export const addMessage = (req, res) => {
 
   jwt.verify(token, process.env.SECRET_KEY, async (err, userInfo) => {
     if (err) return res.status(403).json("Invalid token.");
-    const { chatId, message } = req.body;
 
     const newMessage = new MessageModel({
       senderId: userInfo.id,
-      message,
-      chatId,
+      message: req.body.message,
+      chatId: req.body.chatId,
     });
 
     try {

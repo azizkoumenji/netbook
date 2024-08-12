@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import "./navbar.scss";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { AuthContext } from "../../context/authContext";
 import axios from "axios";

@@ -1,0 +1,44 @@
+.conversation {
+  display: flex;
+  background-color: var(--background-inside);
+  padding: 10px;
+  border-radius: 10px;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+
+  .image {
+
+    position: relative;
+
+    img {
+      object-fit: cover;
+      border-radius: 50%;
+      height: 40px;
+      width: 40px;
+    }
+
+    .indicator {
+      position: absolute;
+      right: 0;
+      top: 2px;
+      height: 10px;
+      width: 10px;
+      background-color: var(--green);
+      border-radius: 50%;
+    }
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+
+    .name {
+      font-weight: 500;
+    }
+
+    .online {
+      font-size: 12px;
+    }
+  }
+}

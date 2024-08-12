@@ -15,6 +15,8 @@ import {
 } from "react-router-dom";
 import { AuthContext } from "./context/authContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Chat from "./pages/chat/Chat";
+import Friends from "./pages/friends/Friends";
 
 const queryClient = new QueryClient();
 
@@ -65,6 +67,10 @@ function App() {
           path: "/profile/:id",
           element: <Profile />,
         },
+        {
+          path: "/friends",
+          element: <Friends />,
+        },
       ],
     },
     {
@@ -74,6 +80,14 @@ function App() {
     {
       path: "/register",
       element: <Register />,
+    },
+    {
+      path: "/chat",
+      element: (
+        <ProtectedRoute>
+          <Chat />
+        </ProtectedRoute>
+      ),
     },
   ]);
 
