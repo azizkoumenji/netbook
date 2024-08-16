@@ -4,7 +4,7 @@ export default function RightBar() {
   return (
     <div className="rightbar">
       <div className="chat">
-        <span className="title">Contacts</span>
+        <span className="title">Online</span>
         <div className="user">
           <div className="user-info">
             <img src="/api/uploads/profile.png" alt="User Image" />

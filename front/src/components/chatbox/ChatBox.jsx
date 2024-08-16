@@ -5,7 +5,12 @@ import { AuthContext } from "../../context/authContext";
 import axios from "axios";
 import moment from "moment";
 
-export default function ChatBox({ chat, setSendMessage, receivedMessage }) {
+export default function ChatBox({
+  chat,
+  setSendMessage,
+  receivedMessage,
+  checkOnlineStatus,
+}) {
   const [receiverUser, setReceiverUser] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
@@ -71,11 +76,13 @@ export default function ChatBox({ chat, setSendMessage, receivedMessage }) {
           <div className="header">
             <div className="image">
               <img src={receiverUser?.profile_pic} alt="Profile Picture" />
-              <div className="indicator"></div>
+              {checkOnlineStatus(chat) && <div className="indicator"></div>}
             </div>
             <div className="text">
               <span className="name">{receiverUser?.name}</span>
-              <span className="online">Online</span>
+              <span className="online">
+                {checkOnlineStatus(chat) ? "Online" : "Offline"}
+              </span>
             </div>
           </div>
           <div className="seperator"></div>

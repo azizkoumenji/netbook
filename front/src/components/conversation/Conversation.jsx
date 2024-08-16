@@ -4,7 +4,7 @@ import "./conversation.scss";
 import axios from "axios";
 import { AuthContext } from "../../context/authContext";
 
-export default function Conversation({ data, onClick }) {
+export default function Conversation({ data, onClick, checkOnlineStatus }) {
   const [receiverUser, setReceiverUser] = useState(null);
   const { currentUser } = useContext(AuthContext);
 
@@ -23,11 +23,13 @@ export default function Conversation({ data, onClick }) {
         <div className="conversation" onClick={onClick}>
           <div className="image">
             <img src={receiverUser.profile_pic} alt="Profile Picture" />
-            <div className="indicator"></div>
+            {checkOnlineStatus(data) && <div className="indicator"></div>}
           </div>
           <div className="text">
             <span className="name">{receiverUser.name}</span>
-            <span className="online">Online</span>
+            <span className="online">
+              {checkOnlineStatus(data) ? "Online" : "Offline"}
+            </span>
           </div>
         </div>
       )}

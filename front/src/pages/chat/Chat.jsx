@@ -45,6 +45,12 @@ export default function Chat() {
     });
   }, [currentUser, sendMessage]);
 
+  const checkOnlineStatus = (chat) => {
+    const receiverId = chat.members.find((id) => id != currentUser.id);
+    const online = onlineUsers.find((user) => user.userId === receiverId);
+    return online ? true : false;
+  };
+
   return (
     <>
       <NavBar />
@@ -54,6 +60,7 @@ export default function Chat() {
           {chats.map((chat) => {
             return (
               <Conversation
+                checkOnlineStatus={checkOnlineStatus}
                 onClick={() => setCurrentChat(chat)}
                 key={chat._id}
                 data={chat}
@@ -62,6 +69,7 @@ export default function Chat() {
           })}
         </div>
         <ChatBox
+          checkOnlineStatus={checkOnlineStatus}
           chat={currentChat}
           setSendMessage={setSendMessage}
           receivedMessage={receivedMessage}
