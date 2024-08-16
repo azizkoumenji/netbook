@@ -15,8 +15,17 @@ import messagesRouter from "./routes/message.js";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
 const app = express();
+const server = createServer(app); // This used because of Socket.io.
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    credentials: true, // Allows cookies to be sent with requests.
+  },
+});
 
 app.use(express.static("dist"));
 app.use(express.json());
@@ -31,6 +40,32 @@ app.use("/api/uploads", uploadsRouter);
 app.use("/api/relationships", relationshipsRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/messages", messagesRouter);
+
+// Socket.io
+let activeUsers = [];
+io.on("connection", (socket) => {
+  socket.on("add new user", (newUserId) => {
+    if (!activeUsers.some((user) => user.userId === newUserId))
+      activeUsers.push({
+        userId: newUserId,
+        socketId: socket.id,
+      });
+    io.emit("get users", activeUsers);
+  });
+
+  socket.on("disconnect", () => {
+    activeUsers = activeUsers.filter((user) => user.socketId !== socket.id);
+
+    io.emit("get users", activeUsers);
+  });
+
+  socket.on("send message", (message) => {
+    const user = activeUsers.find((user) => user.id === message.receiverId);
+    if (user) {
+      io.to(user.socketId).emit("receive message", message);
+    }
+  });
+});
 
 mongoose
   .connect(process.env.MONGODB_LINK)
@@ -60,7 +95,7 @@ mongoose
       }
     });
 
-    app.listen(process.env.EXPRESS_PORT, () => {
+    server.listen(process.env.EXPRESS_PORT, () => {
       console.log("Express server connected!");
       db.connect((err) => {
         if (err) {

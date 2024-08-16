@@ -106,6 +106,8 @@
     gap: 10px;
     align-items: center;
     border-top: 1px solid var(--border);
+    background-color: var(--background-dark);
+    border-radius: 0px 0px 10px 10px;
 
     button {
       background-color: var(--blue);

@@ -1,15 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import "./chatbox.scss";
 import { AuthContext } from "../../context/authContext";
 import axios from "axios";
 import moment from "moment";
 
-export default function ChatBox({ chat }) {
+export default function ChatBox({ chat, setSendMessage, receivedMessage }) {
   const [receiverUser, setReceiverUser] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const scroll = useRef(null);
 
   useEffect(() => {
     const getUser = async () => {
@@ -22,6 +23,8 @@ export default function ChatBox({ chat }) {
       }
     };
 
+    if (chat) getUser();
+
     const getMessages = async () => {
       try {
         const result = await axios.get("/api/messages/" + chat._id);
@@ -31,11 +34,35 @@ export default function ChatBox({ chat }) {
       }
     };
 
-    if (chat) getUser();
     if (chat) getMessages();
-  }, [currentUser.id, chat]);
 
-  const handleSend = () => {};
+    if (receivedMessage) {
+      setMessages([...messages, receivedMessage]);
+    }
+
+    // Scroll to bottom after receiving or sending message.
+    scroll.current?.scrollIntoView({ behaviour: "smooth" });
+  }, [currentUser.id, chat, messages, receivedMessage]);
+
+  const handleSend = async () => {
+    // Send message to databse.
+    const message = {
+      message: newMessage,
+      chatId: chat._id,
+    };
+
+    try {
+      const result = await axios.post("/api/messages", message);
+      setMessages([...messages, result.data]);
+      setNewMessage("");
+    } catch (err) {
+      console.log(err);
+    }
+
+    // Send message to socket server.
+    const receiverId = chat.members.find((id) => id != currentUser.id);
+    setSendMessage({ ...message, receiverId });
+  };
 
   return (
     <div className="chatbox">
@@ -56,6 +83,7 @@ export default function ChatBox({ chat }) {
             {messages.map((message) => {
               return (
                 <div
+                  ref={scroll}
                   key={message._id}
                   className={
                     Number(message.senderId) === currentUser.id
