@@ -10,7 +10,7 @@ export const getFollowers = (req, res) => {
     if (err) return res.status(403).json("Invalid token.");
 
     const q =
-      "select followed_user_id from relationships where follower_user_id = ?";
+      "select followed_user_id, u.* from relationships join users u on followed_user_id = u.id where follower_user_id = ?";
 
     db.query(q, [req.params.id], (err, data) => {
       if (err) return res.status(500).json(err);
@@ -20,6 +20,25 @@ export const getFollowers = (req, res) => {
           return followedUserId.followed_user_id;
         })
       );
+    });
+  });
+};
+
+export const getFriends = (req, res) => {
+  const token = req.cookies.accessToken;
+
+  if (!token) return res.status(401).json("User not logged in.");
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Invalid token.");
+
+    const q =
+      "select u.* from relationships join users u on followed_user_id = u.id where follower_user_id = ?";
+
+    db.query(q, [userInfo.id], (err, data) => {
+      if (err) return res.status(500).json(err);
+
+      return res.status(200).json(data);
     });
   });
 };

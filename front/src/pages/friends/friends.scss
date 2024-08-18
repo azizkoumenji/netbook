@@ -1,0 +1,48 @@
+.friends-page {
+  background-color: var(--background-dark);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  margin: 20px;
+  width: 60%;
+  gap: 10px;
+  justify-content: space-around;
+
+  .no-friends {
+    color: var(--text-light);
+    margin: auto;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+
+    img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    span {
+      color: var(--text-dark);
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .friends-page {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .friends-page {
+    width: 100%;
+  }
+}
