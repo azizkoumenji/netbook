@@ -88,6 +88,8 @@ export default function Home() {
           <span className="message">Something went wrong :(</span>
         ) : isLoading ? (
           <div className="loader"></div>
+        ) : data.length === 0 ? (
+          <span className="no-posts">Follow more people to see posts</span>
         ) : (
           data.map((post) => <Post post={post} key={post.id} />)
         )}

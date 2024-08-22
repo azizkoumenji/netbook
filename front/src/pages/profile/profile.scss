@@ -6,6 +6,16 @@
   margin-top: 20px;
   width: 60%;
 
+  .posts {
+    display: flex;
+    flex-direction: column;
+
+    .no-posts {
+      color: var(--text-light);
+      align-self: center;
+    }
+  }
+
   // Start loader.
 
   .loader {

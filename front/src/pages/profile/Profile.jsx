@@ -115,9 +115,13 @@ export default function Profile() {
             </div>
           </div>
           <div className="posts">
-            {postsAreLoading
-              ? ""
-              : posts.map((post) => <Post post={post} key={post.id} />)}
+            {postsAreLoading ? (
+              ""
+            ) : posts.length === 0 ? (
+              <span className="no-posts">No posts</span>
+            ) : (
+              posts.map((post) => <Post post={post} key={post.id} />)
+            )}
           </div>
         </div>
       )}
