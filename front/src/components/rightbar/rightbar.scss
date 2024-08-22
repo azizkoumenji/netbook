@@ -11,7 +11,7 @@
   margin-right: 10px;
   flex-grow: 1;
 
-  .chat {
+  .online {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -22,6 +22,11 @@
 
     .title {
       font-weight: bold;
+    }
+
+    .no-online {
+      margin: auto;
+      color: var(--text-light);
     }
 
     .user {
