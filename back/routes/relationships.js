@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  getFollowers,
+  getFollowing,
   addRelationship,
   deleteRelationship,
   getFriends,
@@ -8,7 +8,7 @@ import {
 
 const router = express.Router();
 
-router.get("/:id", getFollowers);
+router.get("/:id", getFollowing);
 router.get("/", getFriends);
 router.post("/", addRelationship);
 router.delete("/:id", deleteRelationship);

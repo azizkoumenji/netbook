@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import db from "../db.js";
 
-export const getFollowers = (req, res) => {
+export const getFollowing = (req, res) => {
   const token = req.cookies.accessToken;
 
   if (!token) return res.status(401).json("User not logged in.");
