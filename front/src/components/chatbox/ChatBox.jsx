@@ -1,21 +1,17 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./chatbox.scss";
 import { AuthContext } from "../../context/authContext";
 import axios from "axios";
 import moment from "moment";
+import { OnlineContext } from "../../context/onlineContext";
 
-export default function ChatBox({
-  chat,
-  setSendMessage,
-  receivedMessage,
-  checkOnlineStatus,
-}) {
+export default function ChatBox({ chat, checkOnlineStatus }) {
   const [receiverUser, setReceiverUser] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const scroll = useRef(null);
+  const { socket } = useContext(OnlineContext);
 
   useEffect(() => {
     const getUser = async () => {
@@ -41,13 +37,13 @@ export default function ChatBox({
 
     if (chat) getMessages();
 
-    if (receivedMessage) {
-      setMessages([...messages, receivedMessage]);
+    // Receive message from socket server (basically what will the socket do if it receives a "receive message").
+    if (socket.current) {
+      socket.current.on("receive message", (message) => {
+        setMessages([...messages, message]);
+      });
     }
-
-    // Scroll to bottom after receiving or sending message.
-    scroll.current?.scrollIntoView({ behaviour: "smooth" });
-  }, [currentUser.id, chat, messages, receivedMessage]);
+  }, [currentUser.id, chat, messages, socket]);
 
   const handleSend = async () => {
     // Send message to databse.
@@ -66,7 +62,9 @@ export default function ChatBox({
 
     // Send message to socket server.
     const receiverId = chat.members.find((id) => id != currentUser.id);
-    setSendMessage({ ...message, receiverId });
+    if (socket.current) {
+      socket.current.emit("send message", { ...message, receiverId });
+    }
   };
 
   return (
@@ -90,7 +88,6 @@ export default function ChatBox({
             {messages.map((message) => {
               return (
                 <div
-                  ref={scroll}
                   key={message._id}
                   className={
                     Number(message.senderId) === currentUser.id
@@ -128,4 +125,5 @@ export default function ChatBox({
 
 ChatBox.propTypes = {
   chat: PropTypes.object,
+  checkOnlineStatus: PropTypes.func.isRequired,
 };

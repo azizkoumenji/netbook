@@ -17,6 +17,7 @@ import { AuthContext } from "./context/authContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Chat from "./pages/chat/Chat";
 import Friends from "./pages/friends/Friends";
+import { OnlineContextProvider } from "./context/onlineContext";
 
 const queryClient = new QueryClient();
 
@@ -55,7 +56,9 @@ function App() {
       path: "/",
       element: (
         <ProtectedRoute>
-          <Layout />
+          <OnlineContextProvider>
+            <Layout />
+          </OnlineContextProvider>
         </ProtectedRoute>
       ),
       children: [
@@ -85,7 +88,9 @@ function App() {
       path: "/chat",
       element: (
         <ProtectedRoute>
-          <Chat />
+          <OnlineContextProvider>
+            <Chat />
+          </OnlineContextProvider>
         </ProtectedRoute>
       ),
     },
