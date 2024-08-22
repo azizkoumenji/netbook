@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import "./chatbox.scss";
 import { AuthContext } from "../../context/authContext";
@@ -12,8 +12,32 @@ export default function ChatBox({ chat, checkOnlineStatus }) {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const { socket } = useContext(OnlineContext);
+  const messageBoxRef = useRef(null);
+  const messageRef = useRef(null);
+  const firstLoad = useRef(true);
 
   useEffect(() => {
+    const messageBox = messageBoxRef.current;
+
+    if (messageBox && messageBox.scrollTop === 0 && firstLoad.current) {
+      messageBox.scrollTop = messageBox.scrollHeight;
+      setTimeout(() => {
+        firstLoad.current = false;
+      }, 1000);
+    }
+
+    if (
+      messageBox &&
+      messageRef.current &&
+      Math.abs(
+        messageBox.scrollTop +
+          messageBox.offsetHeight -
+          (messageBox.scrollHeight - messageRef.current.offsetHeight - 20)
+      ) <= 1
+    ) {
+      messageBox.scrollTop = messageBox.scrollHeight;
+    }
+
     const getUser = async () => {
       try {
         const userId = chat?.members?.find((id) => id != currentUser.id);
@@ -84,10 +108,12 @@ export default function ChatBox({ chat, checkOnlineStatus }) {
             </div>
           </div>
           <div className="seperator"></div>
-          <div className="message-box">
+          <div className="message-box" ref={messageBoxRef}>
+            {/* The ref attribute in React is used to create a reference to a DOM element or a class component instance. This reference can then be used to directly interact with the DOM element or component instance, such as accessing its properties or methods*/}
             {messages.map((message) => {
               return (
                 <div
+                  ref={messageRef}
                   key={message._id}
                   className={
                     Number(message.senderId) === currentUser.id
