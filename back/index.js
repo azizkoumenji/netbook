@@ -60,9 +60,18 @@ io.on("connection", (socket) => {
   });
 
   socket.on("send message", (message) => {
-    const user = activeUsers.find((user) => user.id === message.receiverId);
+    const user = activeUsers.find((user) => user.userId === message.receiverId);
     if (user) {
       io.to(user.socketId).emit("receive message", message);
+    }
+  });
+
+  socket.on("send chat", (chat) => {
+    const user = activeUsers.find(
+      (user) => user.userId === Number(chat.receiverId)
+    );
+    if (user) {
+      io.to(user.socketId).emit("receive chat", chat);
     }
   });
 });

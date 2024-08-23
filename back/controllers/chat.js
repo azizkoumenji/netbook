@@ -14,8 +14,8 @@ export const createChat = (req, res) => {
     });
 
     try {
-      await newChat.save();
-      return res.status(200).json("Chat added.");
+      const result = await newChat.save();
+      return res.status(200).json(result);
     } catch (err) {
       return res.status(500).json(err);
     }

@@ -21,10 +21,21 @@
       margin: auto;
     }
 
-    .title {
-      font-weight: bold;
-      font-size: 30px;
-      margin-bottom: 5px;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .title {
+        font-weight: bold;
+        font-size: 30px;
+        margin-bottom: 5px;
+      }
+
+      i {
+        font-size: 20px;
+        cursor: pointer;
+      }
     }
   }
 }

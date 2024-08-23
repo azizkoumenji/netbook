@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./friends.scss";
 import axios from "axios";
 import { Link } from "react-router-dom";

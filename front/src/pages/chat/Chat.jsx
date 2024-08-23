@@ -6,12 +6,15 @@ import Conversation from "../../components/conversation/Conversation";
 import ChatBox from "../../components/chatbox/ChatBox";
 import { AuthContext } from "../../context/authContext";
 import { OnlineContext } from "../../context/onlineContext";
+import NewChat from "../../components/newchat/NewChat";
 
 export default function Chat() {
   const [chats, setChats] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const { onlineUsers } = useContext(OnlineContext);
+  const [showNewChat, setShowNewChat] = useState(false);
+  const { socket } = useContext(OnlineContext);
 
   useEffect(() => {
     const getChats = async () => {
@@ -23,7 +26,12 @@ export default function Chat() {
       }
     };
     getChats();
-  }, []);
+    if (socket.current) {
+      socket.current.on("receive chat", (chat) => {
+        setChats((prev) => [...prev, chat]);
+      });
+    }
+  }, [socket]);
 
   const checkOnlineStatus = (chat) => {
     const receiverId = chat.members.find((id) => id != currentUser.id);
@@ -33,10 +41,19 @@ export default function Chat() {
 
   return (
     <>
+      {showNewChat && (
+        <NewChat setShowNewChat={setShowNewChat} setChats={setChats} />
+      )}
       <NavBar />
       <div className="chat-desktop">
         <div className="chat-list">
-          <span className="title">Chats</span>
+          <div className="header">
+            <span className="title">Chats</span>
+            <i
+              className="bi bi-plus-circle"
+              onClick={() => setShowNewChat(true)}
+            ></i>
+          </div>
           {chats.length === 0 ? (
             <span className="no-chats">No chats</span>
           ) : (
