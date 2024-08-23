@@ -61,9 +61,11 @@ export default function Home() {
               }}
             ></textarea>
           </div>
-          <div className="right">
-            {img && <img src={URL.createObjectURL(img)} alt="Upload Image" />}
-          </div>
+          {img && (
+            <div className="right">
+              <img src={URL.createObjectURL(img)} alt="Upload Image" />
+            </div>
+          )}
         </div>
         <div className="bottom">
           <div className="image">
