@@ -42,7 +42,12 @@ export default function Chat() {
   return (
     <>
       {showNewChat && (
-        <NewChat setShowNewChat={setShowNewChat} setChats={setChats} />
+        <NewChat
+          setShowNewChat={setShowNewChat}
+          setChats={setChats}
+          setCurrentChat={setCurrentChat}
+          chats={chats}
+        />
       )}
       <NavBar />
       <div className="chat-desktop">

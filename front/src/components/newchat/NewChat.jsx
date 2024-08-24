@@ -3,7 +3,12 @@ import "./newchat.scss";
 import { useContext, useEffect, useState } from "react";
 import { OnlineContext } from "../../context/onlineContext";
 
-export default function NewChat({ setShowNewChat, setChats }) {
+export default function NewChat({
+  setShowNewChat,
+  setChats,
+  setCurrentChat,
+  chats,
+}) {
   const [following, setFollowing] = useState([]);
   const [searchKey, setSearchKey] = useState("");
   const { socket } = useContext(OnlineContext);
@@ -13,7 +18,17 @@ export default function NewChat({ setShowNewChat, setChats }) {
     const fetchFollowing = async () => {
       try {
         const result = await axios.get("/api/relationships");
-        setFollowing(result.data);
+        setFollowing(
+          result.data.filter((user) => {
+            let userAlreadyHaveAChat = false;
+            chats.map((chat) => {
+              if (chat.members.includes(user.id)) {
+                userAlreadyHaveAChat = true;
+              }
+            });
+            return !userAlreadyHaveAChat;
+          })
+        );
       } catch (err) {
         console.log(err);
       }
@@ -39,6 +54,7 @@ export default function NewChat({ setShowNewChat, setChats }) {
     try {
       const result = await axios.post("/api/chat", { receiverId: user.id });
       setChats((prev) => [...prev, result.data]);
+
       // Send chat to socket server.
       if (socket.current) {
         socket.current.emit("send chat", {
@@ -48,10 +64,11 @@ export default function NewChat({ setShowNewChat, setChats }) {
       }
 
       setSearchKey("");
+      setShowNewChat(false);
+      setCurrentChat(result.data);
     } catch (err) {
       console.log(err);
     }
-    setShowNewChat(false);
   };
 
   return (
