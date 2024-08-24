@@ -64,30 +64,32 @@ export default function ChatBox({ chat, checkOnlineStatus }) {
     // Receive message from socket server (basically what will the socket do if it receives a "receive message").
     if (socket.current) {
       socket.current.on("receive message", (message) => {
-        setMessages([...messages, message]);
+        setMessages((prev) => [...prev, message]);
       });
     }
-  }, [currentUser.id, chat, messages, socket]);
+  }, [currentUser.id, chat, socket]);
 
   const handleSend = async () => {
-    // Send message to databse.
-    const message = {
-      message: newMessage,
-      chatId: chat._id,
-    };
+    if (newMessage) {
+      // Send message to databse.
+      const message = {
+        message: newMessage,
+        chatId: chat._id,
+      };
 
-    try {
-      const result = await axios.post("/api/messages", message);
-      setMessages([...messages, result.data]);
-      setNewMessage("");
-    } catch (err) {
-      console.log(err);
-    }
+      try {
+        const result = await axios.post("/api/messages", message);
+        setMessages([...messages, result.data]);
+        setNewMessage("");
+      } catch (err) {
+        console.log(err);
+      }
 
-    // Send message to socket server.
-    const receiverId = chat.members.find((id) => id != currentUser.id);
-    if (socket.current) {
-      socket.current.emit("send message", { ...message, receiverId });
+      // Send message to socket server.
+      const receiverId = chat.members.find((id) => id != currentUser.id);
+      if (socket.current) {
+        socket.current.emit("send message", { ...message, receiverId });
+      }
     }
   };
 
@@ -95,19 +97,24 @@ export default function ChatBox({ chat, checkOnlineStatus }) {
     <div className="chatbox">
       {chat ? (
         <>
-          <div className="header">
-            <div className="image">
-              <img src={receiverUser?.profile_pic} alt="Profile Picture" />
-              {checkOnlineStatus(chat) && <div className="indicator"></div>}
-            </div>
-            <div className="text">
-              <span className="name">{receiverUser?.name}</span>
-              <span className="online">
-                {checkOnlineStatus(chat) ? "Online" : "Offline"}
-              </span>
-            </div>
-          </div>
-          <div className="seperator"></div>
+          {receiverUser && (
+            <>
+              <div className="header">
+                <div className="image">
+                  <img src={receiverUser?.profile_pic} alt="Profile Picture" />
+                  {checkOnlineStatus(chat) && <div className="indicator"></div>}
+                </div>
+                <div className="text">
+                  <span className="name">{receiverUser?.name}</span>
+                  <span className="online">
+                    {checkOnlineStatus(chat) ? "Online" : "Offline"}
+                  </span>
+                </div>
+              </div>
+              <div className="seperator"></div>
+            </>
+          )}
+
           <div className="message-box" ref={messageBoxRef}>
             {/* The ref attribute in React is used to create a reference to a DOM element or a class component instance. This reference can then be used to directly interact with the DOM element or component instance, such as accessing its properties or methods*/}
             {messages.map((message) => {

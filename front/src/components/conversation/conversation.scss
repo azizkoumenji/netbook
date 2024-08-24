@@ -1,11 +1,10 @@
 .conversation {
   display: flex;
-  background-color: var(--background-inside);
   padding: 10px;
-  border-radius: 10px;
   align-items: center;
   gap: 10px;
   cursor: pointer;
+  border-bottom: 1px solid var(--border);
 
   .image {
 
