@@ -15,6 +15,8 @@ export default function Chat() {
   const { onlineUsers } = useContext(OnlineContext);
   const [showNewChat, setShowNewChat] = useState(false);
   const { socket } = useContext(OnlineContext);
+  const [showChatBox, setShowChatBox] = useState(false);
+  const [showChatList, setShowChatList] = useState(true);
 
   useEffect(() => {
     const getChats = async () => {
@@ -75,6 +77,45 @@ export default function Chat() {
           )}
         </div>
         <ChatBox checkOnlineStatus={checkOnlineStatus} chat={currentChat} />
+      </div>
+      <div className="chat-mobile">
+        {showChatList && (
+          <div className="chat-list">
+            <div className="header">
+              <span className="title">Chats</span>
+              <i
+                className="bi bi-plus-circle"
+                onClick={() => setShowNewChat(true)}
+              ></i>
+            </div>
+            {chats.length === 0 ? (
+              <span className="no-chats">No chats</span>
+            ) : (
+              chats.map((chat) => {
+                return (
+                  <Conversation
+                    checkOnlineStatus={checkOnlineStatus}
+                    onClick={() => {
+                      setCurrentChat(chat);
+                      setShowChatBox(true);
+                      setShowChatList(false);
+                    }}
+                    key={chat._id}
+                    data={chat}
+                  />
+                );
+              })
+            )}
+          </div>
+        )}
+        {showChatBox && (
+          <ChatBox
+            setShowChatBox={setShowChatBox}
+            setShowChatList={setShowChatList}
+            checkOnlineStatus={checkOnlineStatus}
+            chat={currentChat}
+          />
+        )}
       </div>
     </>
   );

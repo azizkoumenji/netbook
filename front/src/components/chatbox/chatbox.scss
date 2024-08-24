@@ -23,6 +23,10 @@
     align-items: center;
     gap: 10px;
 
+    i {
+      cursor: pointer;
+    }
+
     .image {
 
       position: relative;
@@ -116,6 +120,7 @@
       height: 40px;
       width: 40px;
       font-size: 20px;
+      cursor: pointer;
 
       i {
         margin: auto;
@@ -137,6 +142,21 @@
       &::placeholder {
         color: var(--text-light);
       }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .chatbox {
+    margin: 0;
+    height: calc(100vh - 75px);
+  }
+}
+
+@media (min-width: 768px) {
+  .header {
+    i {
+      display: none;
     }
   }
 }

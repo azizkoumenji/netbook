@@ -6,7 +6,12 @@ import axios from "axios";
 import moment from "moment";
 import { OnlineContext } from "../../context/onlineContext";
 
-export default function ChatBox({ chat, checkOnlineStatus }) {
+export default function ChatBox({
+  chat,
+  checkOnlineStatus,
+  setShowChatBox,
+  setShowChatList,
+}) {
   const [receiverUser, setReceiverUser] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
@@ -100,6 +105,13 @@ export default function ChatBox({ chat, checkOnlineStatus }) {
           {receiverUser && (
             <>
               <div className="header">
+                <i
+                  onClick={() => {
+                    setShowChatBox(false);
+                    setShowChatList(true);
+                  }}
+                  className="bi bi-arrow-left"
+                ></i>
                 <div className="image">
                   <img src={receiverUser?.profile_pic} alt="Profile Picture" />
                   {checkOnlineStatus(chat) && <div className="indicator"></div>}
