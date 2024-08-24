@@ -10,27 +10,33 @@ export default function RightBar() {
   const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
-    if (onlineUsers.length !== 1) {
-      const results = [];
-      onlineUsers.map(async (user) => {
-        if (user.userId !== currentUser.id) {
-          try {
-            const result = await axios.get("/api/users/" + user.userId);
-            const following = await axios.get(
-              "/api/relationships/" + currentUser.id
-            );
-            if (following.data.includes(result.data.id)) {
-              results.push(result.data);
-              setOnlineUsersData(results);
+    const online = async () => {
+      if (onlineUsers.length > 1) {
+        const results = [];
+        const promises = onlineUsers.map(async (user) => {
+          if (user.userId !== currentUser.id) {
+            try {
+              const result = await axios.get("/api/users/" + user.userId);
+              const following = await axios.get(
+                "/api/relationships/" + currentUser.id
+              );
+              if (following.data.includes(result.data.id)) {
+                results.push(result.data);
+              }
+            } catch (err) {
+              console.log(err);
             }
-          } catch (err) {
-            console.log(err);
           }
-        }
-      });
-    } else {
-      setOnlineUsersData([]);
-    }
+        });
+
+        await Promise.all(promises);
+        setOnlineUsersData(results);
+      } else {
+        setOnlineUsersData([]);
+      }
+    };
+
+    online();
   }, [onlineUsers, currentUser]);
 
   return (
