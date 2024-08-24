@@ -72,8 +72,8 @@ export default function Update({ setShowUpdate }) {
   };
 
   return (
-    <div className="background" onClick={() => setShowUpdate(false)}>
-      <div className="card" onClick={(e) => e.stopPropagation()}>
+    <div className="background-update" onClick={() => setShowUpdate(false)}>
+      <div className="card-update" onClick={(e) => e.stopPropagation()}>
         <label htmlFor="cover_pic">
           <i className="bi bi-image"></i> Upload new cover picture
         </label>

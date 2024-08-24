@@ -23,7 +23,7 @@
     align-items: center;
     gap: 10px;
 
-    i {
+    .bi-arrow-left {
       cursor: pointer;
     }
 
@@ -155,7 +155,7 @@
 
 @media (min-width: 768px) {
   .header {
-    i {
+    .bi-arrow-left {
       display: none;
     }
   }
