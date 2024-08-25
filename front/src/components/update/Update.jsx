@@ -5,10 +5,10 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export default function Update({ setShowUpdate }) {
+export default function Update({ setShowUpdate, setUpdate, update, userId }) {
   const [cover, setCover] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, updateCurrUser } = useContext(AuthContext);
   const [inputs, setInputs] = useState({
     name: currentUser.name,
     username: currentUser.username,
@@ -46,7 +46,7 @@ export default function Update({ setShowUpdate }) {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["user"]);
+      queryClient.invalidateQueries(["user", userId, update]);
     },
   });
 
@@ -61,14 +61,14 @@ export default function Update({ setShowUpdate }) {
       email: inputs.email,
       birthday: inputs.birthday,
     };
-    console.log(user);
     mutation.mutate(user);
     localStorage.setItem(
       "user",
       JSON.stringify({ id: currentUser.id, ...user })
     );
+    updateCurrUser();
     setShowUpdate(false);
-    window.location.reload();
+    setUpdate(!update);
   };
 
   return (
@@ -77,6 +77,7 @@ export default function Update({ setShowUpdate }) {
         <label htmlFor="cover_pic">
           <i className="bi bi-image"></i> Upload new cover picture
         </label>
+
         <label htmlFor="profile_pic">
           <i className="bi bi-image"></i> Upload new profile picture
         </label>
@@ -96,6 +97,7 @@ export default function Update({ setShowUpdate }) {
           style={{ display: "none" }}
           onChange={(e) => setProfilePic(e.target.files[0])}
         />
+
         <label htmlFor="name">Name</label>
 
         <input
@@ -105,6 +107,7 @@ export default function Update({ setShowUpdate }) {
           value={inputs.name}
           onChange={handleChange}
         />
+
         <label htmlFor="username">Username</label>
 
         <input
@@ -114,6 +117,7 @@ export default function Update({ setShowUpdate }) {
           value={inputs.username}
           onChange={handleChange}
         />
+
         <label htmlFor="email">Email</label>
 
         <input
@@ -123,13 +127,16 @@ export default function Update({ setShowUpdate }) {
           value={inputs.email}
           onChange={handleChange}
         />
+
         <label htmlFor="birthday">Birthday</label>
+
         <input
           type="date"
           name="birthday"
           value={inputs.birthday}
           onChange={handleChange}
         />
+
         <button onClick={handleSave}>Save</button>
       </div>
     </div>

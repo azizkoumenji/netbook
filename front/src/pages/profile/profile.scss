@@ -175,6 +175,11 @@
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
+
+      .email {
+        font-size: 12px;
+        display: block;
+      }
     }
 
     div {

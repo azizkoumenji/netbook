@@ -11,10 +11,13 @@ import Update from "../../components/update/Update";
 export default function Profile() {
   const userId = useLocation().pathname.split("/")[2]; // useLocation().pathname returns our link.
 
+  const [update, setUpdate] = useState(false);
+
   const { isLoading, error, data } = useQuery({
-    queryKey: ["user"],
+    queryKey: ["user", userId, update], // Include userId in queryKey so everytime userId changes the queryFn is run again.
     queryFn: async () => {
       try {
+        console.log("userId: " + userId);
         const res = await axios.get(`/api/users/${userId}`);
         return res.data;
       } catch (err) {
@@ -23,12 +26,14 @@ export default function Profile() {
     },
   });
 
+  console.log(data);
+
   const {
     isLoading: postsAreLoading,
     error: postsError,
     data: posts,
   } = useQuery({
-    queryKey: ["userPosts"],
+    queryKey: ["userPosts", userId, update],
     queryFn: async () => {
       try {
         const res = await axios.get(`/api/posts/user/${userId}`);
@@ -67,7 +72,7 @@ export default function Profile() {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["user"]);
+      queryClient.invalidateQueries(["user", userId, update]);
     },
   });
 
@@ -79,7 +84,14 @@ export default function Profile() {
 
   return (
     <>
-      {showUpdate && <Update setShowUpdate={setShowUpdate} />}
+      {showUpdate && (
+        <Update
+          setShowUpdate={setShowUpdate}
+          setUpdate={setUpdate}
+          update={update}
+          userId={userId}
+        />
+      )}
       {isLoading || postsAreLoading ? (
         <div className="profile">
           <div className="loader"></div>
@@ -111,7 +123,7 @@ export default function Profile() {
             </div>
             <div className="right">
               <i className="bi bi-envelope-at-fill"></i>
-              <span style={{ fontSize: "12px" }}>{data.email}</span>
+              <span className="email">{data.email}</span>
             </div>
           </div>
           <div className="posts">
