@@ -13,6 +13,7 @@ export default function ChatBox({
   setShowChatList,
 }) {
   const [receiverUser, setReceiverUser] = useState(null);
+  const [receiverUserUI, setReceiverUserUI] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -20,6 +21,20 @@ export default function ChatBox({
   const messageBoxRef = useRef(null);
   const messageRef = useRef(null);
   const [firstLoad, setFirstLoad] = useState(true);
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const userId = chat?.members?.find((id) => id != currentUser.id);
+        const result = await axios.get(`/api/users/${userId}`);
+        setReceiverUserUI(result.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    if (chat) getUser();
+  }, [chat, currentUser]);
 
   useEffect(() => {
     const getUser = async () => {
@@ -46,22 +61,20 @@ export default function ChatBox({
     if (chat) getMessages();
 
     // Receive message from socket server (basically what will the socket do if it receives a "receive message").
-    if (socket.current) {
+    if (socket.current && receiverUser) {
       socket.current.on("receive message", (message) => {
-        setMessages((prev) => [...prev, message]);
+        if (message.senderId === receiverUser.id) {
+          setMessages((prev) => [...prev, message]);
+        }
       });
     }
-  }, [currentUser.id, chat, socket]);
+  }, [currentUser, chat, socket, receiverUser]);
 
   useEffect(() => {
     const messageBox = messageBoxRef.current;
 
     if (messageBox && firstLoad) {
       messageBox.scrollTop = messageBox.scrollHeight;
-      console.log("/////////////////////");
-      setTimeout(() => {
-        firstLoad.current = false;
-      }, 1000);
     }
 
     if (
@@ -96,7 +109,11 @@ export default function ChatBox({
       // Send message to socket server.
       const receiverId = chat.members.find((id) => id != currentUser.id);
       if (socket.current) {
-        socket.current.emit("send message", { ...message, receiverId });
+        socket.current.emit("send message", {
+          ...message,
+          receiverId,
+          senderId: currentUser.id,
+        });
       }
     }
   };
@@ -105,7 +122,7 @@ export default function ChatBox({
     <div className="chatbox">
       {chat ? (
         <>
-          {receiverUser && (
+          {receiverUserUI && (
             <>
               <div className="header">
                 <i
@@ -116,11 +133,14 @@ export default function ChatBox({
                   className="bi bi-arrow-left"
                 ></i>
                 <div className="image">
-                  <img src={receiverUser?.profile_pic} alt="Profile Picture" />
+                  <img
+                    src={receiverUserUI?.profile_pic}
+                    alt="Profile Picture"
+                  />
                   {checkOnlineStatus(chat) && <div className="indicator"></div>}
                 </div>
                 <div className="text">
-                  <span className="name">{receiverUser?.name}</span>
+                  <span className="name">{receiverUserUI?.name}</span>
                   <span className="online">
                     {checkOnlineStatus(chat) ? "Online" : "Offline"}
                   </span>
