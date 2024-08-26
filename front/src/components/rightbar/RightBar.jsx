@@ -53,7 +53,11 @@ export default function RightBar() {
           onlineUsersData.map((user) => (
             <div key={user.id} className="user">
               <div className="user-info">
-                <img src={user.profile_pic} alt="User Image" />
+                <img
+                  src={user.profile_pic}
+                  className="img-online"
+                  alt="User Image"
+                />
                 <div className="indicator"></div>
                 <span>{user.name}</span>
               </div>
