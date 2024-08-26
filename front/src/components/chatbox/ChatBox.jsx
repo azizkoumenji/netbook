@@ -19,30 +19,9 @@ export default function ChatBox({
   const { socket } = useContext(OnlineContext);
   const messageBoxRef = useRef(null);
   const messageRef = useRef(null);
-  const firstLoad = useRef(true);
+  const [firstLoad, setFirstLoad] = useState(true);
 
   useEffect(() => {
-    const messageBox = messageBoxRef.current;
-
-    if (messageBox && messageBox.scrollTop === 0 && firstLoad.current) {
-      messageBox.scrollTop = messageBox.scrollHeight;
-      setTimeout(() => {
-        firstLoad.current = false;
-      }, 1000);
-    }
-
-    if (
-      messageBox &&
-      messageRef.current &&
-      Math.abs(
-        messageBox.scrollTop +
-          messageBox.offsetHeight -
-          (messageBox.scrollHeight - messageRef.current.offsetHeight - 20)
-      ) <= 1
-    ) {
-      messageBox.scrollTop = messageBox.scrollHeight;
-    }
-
     const getUser = async () => {
       try {
         const userId = chat?.members?.find((id) => id != currentUser.id);
@@ -73,6 +52,30 @@ export default function ChatBox({
       });
     }
   }, [currentUser.id, chat, socket]);
+
+  useEffect(() => {
+    const messageBox = messageBoxRef.current;
+
+    if (messageBox && firstLoad) {
+      messageBox.scrollTop = messageBox.scrollHeight;
+      console.log("/////////////////////");
+      setTimeout(() => {
+        firstLoad.current = false;
+      }, 1000);
+    }
+
+    if (
+      messageBox &&
+      messageRef.current &&
+      Math.abs(
+        messageBox.scrollTop +
+          messageBox.offsetHeight -
+          (messageBox.scrollHeight - messageRef.current.offsetHeight - 20)
+      ) <= 1
+    ) {
+      messageBox.scrollTop = messageBox.scrollHeight;
+    }
+  }, [messages, firstLoad]);
 
   const handleSend = async () => {
     if (newMessage) {
