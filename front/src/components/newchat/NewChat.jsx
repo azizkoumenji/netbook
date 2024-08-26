@@ -13,6 +13,7 @@ export default function NewChat({
   const [searchKey, setSearchKey] = useState("");
   const { socket } = useContext(OnlineContext);
   const [resetSearch, setResetSeach] = useState(true);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     const fetchFollowing = async () => {
@@ -29,13 +30,14 @@ export default function NewChat({
             return !userAlreadyHaveAChat;
           })
         );
+        setLoader(false);
       } catch (err) {
         console.log(err);
       }
     };
 
     fetchFollowing();
-  }, [resetSearch]);
+  }, [resetSearch, chats]);
 
   const handleSearch = (e) => {
     setSearchKey(e.target.value);
@@ -84,7 +86,9 @@ export default function NewChat({
           />
         </div>
         <div className="following-list">
-          {following.length === 0 ? (
+          {loader ? (
+            <div className="loader"></div>
+          ) : following.length === 0 ? (
             <span className="no-contacts">No contacts</span>
           ) : (
             following.map((user) => (

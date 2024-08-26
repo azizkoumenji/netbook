@@ -17,12 +17,14 @@ export default function Chat() {
   const { socket } = useContext(OnlineContext);
   const [showChatBox, setShowChatBox] = useState(false);
   const [showChatList, setShowChatList] = useState(true);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     const getChats = async () => {
       try {
         const result = await axios.get("/api/chat");
         setChats(result.data);
+        setLoader(false);
       } catch (err) {
         console.log(err);
       }
@@ -61,7 +63,9 @@ export default function Chat() {
               onClick={() => setShowNewChat(true)}
             ></i>
           </div>
-          {chats.length === 0 ? (
+          {loader ? (
+            <div className="loader"></div>
+          ) : chats.length === 0 ? (
             <span className="no-chats">No chats</span>
           ) : (
             chats.map((chat) => {

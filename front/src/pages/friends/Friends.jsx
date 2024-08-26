@@ -5,12 +5,14 @@ import { Link } from "react-router-dom";
 
 export default function Friends() {
   const [friends, setFriends] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     const fetchFriends = async () => {
       try {
         const result = await axios.get("/api/relationships");
         setFriends(result.data);
+        setLoader(false);
       } catch (err) {
         console.log(err);
       }
@@ -19,7 +21,9 @@ export default function Friends() {
   }, []);
   return (
     <div className="friends-page">
-      {friends.length === 0 ? (
+      {loader ? (
+        <div className="loader"></div>
+      ) : friends.length === 0 ? (
         <span className="no-friends">No friends to show</span>
       ) : (
         friends.map((friend) => {
