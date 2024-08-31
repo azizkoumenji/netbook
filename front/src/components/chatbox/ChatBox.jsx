@@ -13,7 +13,6 @@ export default function ChatBox({
   setShowChatList,
 }) {
   const [receiverUser, setReceiverUser] = useState(null);
-  const [receiverUserUI, setReceiverUserUI] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -21,20 +20,7 @@ export default function ChatBox({
   const messageBoxRef = useRef(null);
   const messageRef = useRef(null);
   const [firstLoad, setFirstLoad] = useState(true);
-
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const userId = chat?.members?.find((id) => id != currentUser.id);
-        const result = await axios.get(`/api/users/${userId}`);
-        setReceiverUserUI(result.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    if (chat) getUser();
-  }, [chat, currentUser]);
+  const receiverUserRef = useRef(receiverUser);
 
   useEffect(() => {
     const getUser = async () => {
@@ -48,7 +34,26 @@ export default function ChatBox({
     };
 
     if (chat) getUser();
+  }, [chat, currentUser]);
 
+  useEffect(() => {
+    receiverUserRef.current = receiverUser;
+  }, [receiverUser]);
+
+  useEffect(() => {
+    // Receive message from socket server (basically what will the socket do if it receives a "receive message").
+    const handleMessage = (message) => {
+      if (Number(message.senderId) === Number(receiverUserRef.current?.id)) {
+        setMessages((prev) => [...prev, message]);
+      }
+    };
+
+    if (socket.current) {
+      socket.current.on("receive message", handleMessage);
+    }
+  }, [socket]);
+
+  useEffect(() => {
     const getMessages = async () => {
       try {
         const result = await axios.get("/api/messages/" + chat._id);
@@ -59,16 +64,11 @@ export default function ChatBox({
     };
 
     if (chat) getMessages();
+  }, [chat]);
 
-    // Receive message from socket server (basically what will the socket do if it receives a "receive message").
-    if (socket.current && receiverUser) {
-      socket.current.on("receive message", (message) => {
-        if (message.senderId === receiverUser.id) {
-          setMessages((prev) => [...prev, message]);
-        }
-      });
-    }
-  }, [currentUser, chat, socket, receiverUser]);
+  useEffect(() => {
+    setFirstLoad(true);
+  }, [chat]);
 
   useEffect(() => {
     const messageBox = messageBoxRef.current;
@@ -122,7 +122,7 @@ export default function ChatBox({
     <div className="chatbox">
       {chat ? (
         <>
-          {receiverUserUI && (
+          {receiverUser && (
             <>
               <div className="header">
                 <i
@@ -133,14 +133,11 @@ export default function ChatBox({
                   className="bi bi-arrow-left"
                 ></i>
                 <div className="image">
-                  <img
-                    src={receiverUserUI?.profile_pic}
-                    alt="Profile Picture"
-                  />
+                  <img src={receiverUser?.profile_pic} alt="Profile Picture" />
                   {checkOnlineStatus(chat) && <div className="indicator"></div>}
                 </div>
                 <div className="text">
-                  <span className="name">{receiverUserUI?.name}</span>
+                  <span className="name">{receiverUser?.name}</span>
                   <span className="online">
                     {checkOnlineStatus(chat) ? "Online" : "Offline"}
                   </span>
