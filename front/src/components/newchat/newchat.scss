@@ -55,7 +55,7 @@
     }
 
     .following-list {
-      overflow: scroll;
+      overflow: auto;
       display: flex;
       flex-direction: column;
       gap: 10px;

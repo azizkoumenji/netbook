@@ -13,6 +13,7 @@ export default function RightBar() {
   useEffect(() => {
     const online = async () => {
       if (onlineUsers.length > 1) {
+        setLoader(true);
         const results = [];
         const promises = onlineUsers.map(async (user) => {
           if (user.userId !== currentUser.id) {
@@ -35,6 +36,11 @@ export default function RightBar() {
         setLoader(false);
       } else {
         setOnlineUsersData([]);
+        if (onlineUsers.length === 0) {
+          setLoader(true);
+        } else {
+          setLoader(false);
+        }
       }
     };
 
@@ -48,7 +54,7 @@ export default function RightBar() {
         {loader ? (
           <div className="loader"></div>
         ) : onlineUsersData.length === 0 ? (
-          <span className="no-online">No online friends</span>
+          <span className="no-online">No one online</span>
         ) : (
           onlineUsersData.map((user) => (
             <div key={user.id} className="user">

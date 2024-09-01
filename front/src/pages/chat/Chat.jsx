@@ -63,22 +63,24 @@ export default function Chat() {
               onClick={() => setShowNewChat(true)}
             ></i>
           </div>
-          {loader ? (
-            <div className="loader"></div>
-          ) : chats.length === 0 ? (
-            <span className="no-chats">No chats</span>
-          ) : (
-            chats.map((chat) => {
-              return (
-                <Conversation
-                  checkOnlineStatus={checkOnlineStatus}
-                  onClick={() => setCurrentChat(chat)}
-                  key={chat._id}
-                  data={chat}
-                />
-              );
-            })
-          )}
+          <div className="list">
+            {loader ? (
+              <div className="loader"></div>
+            ) : chats.length === 0 ? (
+              <span className="no-chats">No chats</span>
+            ) : (
+              chats.map((chat) => {
+                return (
+                  <Conversation
+                    checkOnlineStatus={checkOnlineStatus}
+                    onClick={() => setCurrentChat(chat)}
+                    key={chat._id}
+                    data={chat}
+                  />
+                );
+              })
+            )}
+          </div>
         </div>
         <ChatBox checkOnlineStatus={checkOnlineStatus} chat={currentChat} />
       </div>
@@ -92,24 +94,26 @@ export default function Chat() {
                 onClick={() => setShowNewChat(true)}
               ></i>
             </div>
-            {chats.length === 0 ? (
-              <span className="no-chats">No chats</span>
-            ) : (
-              chats.map((chat) => {
-                return (
-                  <Conversation
-                    checkOnlineStatus={checkOnlineStatus}
-                    onClick={() => {
-                      setCurrentChat(chat);
-                      setShowChatBox(true);
-                      setShowChatList(false);
-                    }}
-                    key={chat._id}
-                    data={chat}
-                  />
-                );
-              })
-            )}
+            <div className="list">
+              {chats.length === 0 ? (
+                <span className="no-chats">No chats</span>
+              ) : (
+                chats.map((chat) => {
+                  return (
+                    <Conversation
+                      checkOnlineStatus={checkOnlineStatus}
+                      onClick={() => {
+                        setCurrentChat(chat);
+                        setShowChatBox(true);
+                        setShowChatList(false);
+                      }}
+                      key={chat._id}
+                      data={chat}
+                    />
+                  );
+                })
+              )}
+            </div>
           </div>
         )}
         {showChatBox && (
