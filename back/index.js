@@ -28,10 +28,15 @@ const io = new Server(server, {
   },
 });
 
+app.use(
+  cors({
+    origin: true, // Allow requests from any origin.
+    credentials: true, // Allows cookies to be sent with requests.
+  })
+);
 app.use(express.static("dist"));
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
 
 app.use("/api/users", usersRouter);
 app.use("/api/posts", postsRouter);
