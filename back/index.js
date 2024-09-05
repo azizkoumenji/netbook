@@ -17,6 +17,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import cors from "cors";
 
 const app = express();
 const server = createServer(app); // This used because of Socket.io.
@@ -30,6 +31,7 @@ const io = new Server(server, {
 app.use(express.static("dist"));
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 app.use("/api/users", usersRouter);
 app.use("/api/posts", postsRouter);
