@@ -71,7 +71,7 @@ function App() {
           element: <Profile />,
         },
         {
-          path: "/friends",
+          path: "/following",
           element: <Friends />,
         },
       ],

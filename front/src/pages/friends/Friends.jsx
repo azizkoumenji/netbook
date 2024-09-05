@@ -24,7 +24,7 @@ export default function Friends() {
       {loader ? (
         <div className="loader"></div>
       ) : friends.length === 0 ? (
-        <span className="no-friends">No friends to show</span>
+        <span className="no-friends">You don't follow anyone</span>
       ) : (
         friends.map((friend) => {
           return (

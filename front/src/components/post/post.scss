@@ -67,17 +67,17 @@
   }
 
   .content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-wrap: anywhere;
+
     img {
       width: 100%;
       border-radius: 10px;
       max-height: 500px;
       object-fit: cover;
     }
-
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    overflow-wrap: anywhere;
   }
 
   .reactions {

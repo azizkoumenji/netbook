@@ -19,12 +19,12 @@ export default function LeftBar() {
         </Link>
       </div>
       <Link
-        to="/friends"
+        to="/following"
         style={{ textDecoration: "none", color: "var(--text-dark)" }}
       >
         <div className="friends">
           <i className="bi bi-people-fill"></i>
-          <span>Friends</span>
+          <span>Following</span>
         </div>
       </Link>
       <Link

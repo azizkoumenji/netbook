@@ -61,7 +61,7 @@ export default function NavBar() {
         <Link to="/chat" className="link">
           <i className="bi bi-chat-fill"></i>
         </Link>
-        <Link to="/friends" className="link">
+        <Link to="/following" className="link">
           <div className="friends">
             <i className="bi bi-people-fill"></i>
           </div>
