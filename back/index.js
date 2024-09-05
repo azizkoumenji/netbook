@@ -30,7 +30,7 @@ const io = new Server(server, {
 
 app.use(
   cors({
-    origin: true, // Allow requests from any origin.
+    origin: "*", // Allow requests from any origin.
     credentials: true, // Allows cookies to be sent with requests.
   })
 );
