@@ -15,6 +15,8 @@ export default function Update({ setShowUpdate, setUpdate, update, userId }) {
     email: currentUser.email,
     birthday: currentUser.birthday.substr(0, 10),
   });
+  const [profileCheck, setProfileCheck] = useState(false);
+  const [coverCheck, setCoverCheck] = useState(false);
 
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -74,12 +76,18 @@ export default function Update({ setShowUpdate, setUpdate, update, userId }) {
   return (
     <div className="background-update" onClick={() => setShowUpdate(false)}>
       <div className="card-update" onClick={(e) => e.stopPropagation()}>
-        <label htmlFor="cover_pic">
-          <i className="bi bi-image"></i> Upload new cover picture
+        <label htmlFor="cover_pic" className="label-upload">
+          <div>
+            <i className="bi bi-image"></i> Upload new cover picture
+          </div>
+          {coverCheck && <i className="bi bi-check-circle check"></i>}
         </label>
 
-        <label htmlFor="profile_pic">
-          <i className="bi bi-image"></i> Upload new profile picture
+        <label htmlFor="profile_pic" className="label-upload">
+          <div>
+            <i className="bi bi-image"></i> Upload new profile picture
+          </div>
+          {profileCheck && <i className="bi bi-check-circle check"></i>}
         </label>
 
         <input
@@ -87,7 +95,10 @@ export default function Update({ setShowUpdate, setUpdate, update, userId }) {
           name="cover_pic"
           id="cover_pic"
           style={{ display: "none" }}
-          onChange={(e) => setCover(e.target.files[0])}
+          onChange={(e) => {
+            setCover(e.target.files[0]);
+            setCoverCheck(true);
+          }}
         />
 
         <input
@@ -95,7 +106,10 @@ export default function Update({ setShowUpdate, setUpdate, update, userId }) {
           id="profile_pic"
           name="profile_pic"
           style={{ display: "none" }}
-          onChange={(e) => setProfilePic(e.target.files[0])}
+          onChange={(e) => {
+            setProfilePic(e.target.files[0]);
+            setProfileCheck(true);
+          }}
         />
 
         <label htmlFor="name">Name</label>
