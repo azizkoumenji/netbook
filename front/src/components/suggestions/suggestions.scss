@@ -1,0 +1,53 @@
+.suggestions-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: var(--background-dark);
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  width: 100%;
+
+  .title {
+    font-weight: bold;
+  }
+
+  .empty-response {
+    margin: auto;
+    color: var(--text-light);
+  }
+
+  .user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .link {
+      text-decoration: none;
+      color: var(--text-dark);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+
+      .image {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+
+    .follow {
+      background-color: var(--blue);
+      color: var(--text-blue-button);
+      border-radius: 5px;
+      border: none;
+      padding: 5px 10px;
+    }
+
+  }
+}

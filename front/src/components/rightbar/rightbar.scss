@@ -11,7 +11,7 @@
   margin-right: 10px;
   flex-grow: 1;
 
-  .online {
+  .card {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -24,7 +24,7 @@
       font-weight: bold;
     }
 
-    .no-online {
+    .empty-response {
       margin: auto;
       color: var(--text-light);
     }
@@ -57,6 +57,14 @@
           left: 23px;
 
         }
+      }
+
+      .follow {
+        background-color: var(--blue);
+        color: var(--text-blue-button);
+        border-radius: 5px;
+        border: none;
+        padding: 5px 10px;
       }
 
     }

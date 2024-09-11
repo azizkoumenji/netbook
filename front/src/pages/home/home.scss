@@ -184,10 +184,17 @@
 
     .no-posts {
       color: var(--text-light);
+      margin-bottom: 20px;
     }
 
     .message {
       color: var(--text-light);
     }
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-suggestions {
+    display: none;
   }
 }

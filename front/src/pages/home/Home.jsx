@@ -4,6 +4,7 @@ import "./home.scss";
 import { AuthContext } from "../../context/authContext";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import Suggestions from "../../components/suggestions/Suggestions";
 
 export default function Home() {
   const { currentUser } = useContext(AuthContext);
@@ -91,7 +92,10 @@ export default function Home() {
         ) : isLoading ? (
           <div className="loader"></div>
         ) : data.length === 0 ? (
-          <span className="no-posts">Follow more people to see posts</span>
+          <>
+            <span className="no-posts">Follow more people to see posts</span>
+            <Suggestions className={"mobile-suggestions"} />
+          </>
         ) : (
           data.map((post) => <Post post={post} key={post.id} />)
         )}

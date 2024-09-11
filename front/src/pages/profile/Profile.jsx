@@ -26,8 +26,6 @@ export default function Profile() {
     },
   });
 
-  console.log(data);
-
   const {
     isLoading: postsAreLoading,
     error: postsError,

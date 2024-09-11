@@ -51,3 +51,20 @@ export const searchUsers = (req, res) => {
     return res.status(200).json(data);
   });
 };
+
+export const getSuggestions = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("User not logged in.");
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Invalid token.");
+
+    const q =
+      "select * from users where id not in (select u.id from users u join relationships r on r.follower_user_id = ? and followed_user_id = u.id) and id <> ? order by rand() limit 2";
+
+    db.query(q, [userInfo.id, userInfo.id], (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json(data);
+    });
+  });
+};

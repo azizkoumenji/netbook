@@ -3,6 +3,7 @@ import "./rightbar.scss";
 import { OnlineContext } from "../../context/onlineContext";
 import axios from "axios";
 import { AuthContext } from "../../context/authContext";
+import Suggestions from "../suggestions/Suggestions";
 
 export default function RightBar() {
   const { onlineUsers } = useContext(OnlineContext);
@@ -49,12 +50,12 @@ export default function RightBar() {
 
   return (
     <div className="rightbar">
-      <div className="online">
+      <div className="card">
         <span className="title">Online</span>
         {loader ? (
           <div className="loader"></div>
         ) : onlineUsersData.length === 0 ? (
-          <span className="no-online">No one online</span>
+          <span className="empty-response">No one online</span>
         ) : (
           onlineUsersData.map((user) => (
             <div key={user.id} className="user">
@@ -71,6 +72,7 @@ export default function RightBar() {
           ))
         )}
       </div>
+      <Suggestions />
     </div>
   );
 }
