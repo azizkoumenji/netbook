@@ -11,11 +11,7 @@ import { AuthContext } from "../../context/authContext";
 export default function Post({ post }) {
   const [commentVisibility, setCommentVisibility] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
-  const {
-    isLoading,
-    error,
-    data: commentsCount,
-  } = useQuery({
+  const { data: commentsCount } = useQuery({
     queryKey: ["commentsCount", post.id],
     queryFn: async () => {
       try {
@@ -27,11 +23,7 @@ export default function Post({ post }) {
     },
   });
 
-  const {
-    isLoading: likesIsLoading,
-    error: likesError,
-    data: likes,
-  } = useQuery({
+  const { isLoading: likesIsLoading, data: likes } = useQuery({
     queryKey: ["likes", post.id],
     queryFn: async () => {
       const res = await axios.get(`/api/likes/${post.id}`);

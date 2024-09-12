@@ -39,4 +39,6 @@ export default function Conversation({ data, onClick, checkOnlineStatus }) {
 
 Conversation.propTypes = {
   data: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+  checkOnlineStatus: PropTypes.func.isRequired,
 };

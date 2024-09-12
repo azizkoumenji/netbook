@@ -159,4 +159,7 @@ export default function Update({ setShowUpdate, setUpdate, update, userId }) {
 
 Update.propTypes = {
   setShowUpdate: PropTypes.func.isRequired,
+  setUpdate: PropTypes.func.isRequired,
+  update: PropTypes.bool.isRequired,
+  userId: PropTypes.string.isRequired,
 };

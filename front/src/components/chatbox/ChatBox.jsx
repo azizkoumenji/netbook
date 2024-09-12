@@ -191,4 +191,6 @@ export default function ChatBox({
 ChatBox.propTypes = {
   chat: PropTypes.object,
   checkOnlineStatus: PropTypes.func.isRequired,
+  setShowChatBox: PropTypes.func.isRequired,
+  setShowChatList: PropTypes.func.isRequired,
 };

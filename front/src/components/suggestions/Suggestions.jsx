@@ -3,6 +3,8 @@ import "./suggestions.scss";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+import PropTypes from "prop-types";
+
 export default function Suggestions({ className }) {
   const { isLoading, data } = useQuery({
     queryKey: ["suggestions"],
@@ -64,3 +66,7 @@ export default function Suggestions({ className }) {
     </div>
   );
 }
+
+Suggestions.propTypes = {
+  className: PropTypes.string,
+};

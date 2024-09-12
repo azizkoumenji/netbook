@@ -3,6 +3,8 @@ import "./newchat.scss";
 import { useContext, useEffect, useState } from "react";
 import { OnlineContext } from "../../context/onlineContext";
 
+import PropTypes from "prop-types";
+
 export default function NewChat({
   setShowNewChat,
   setChats,
@@ -107,3 +109,10 @@ export default function NewChat({
     </div>
   );
 }
+
+NewChat.propTypes = {
+  setShowNewChat: PropTypes.func.isRequired,
+  setChats: PropTypes.func.isRequired,
+  setCurrentChat: PropTypes.func.isRequired,
+  chats: PropTypes.array.isRequired,
+};

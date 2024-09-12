@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import Suggestions from "../../components/suggestions/Suggestions";
 
 export default function Friends() {
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ["friends"],
     queryFn: async () => {
       try {

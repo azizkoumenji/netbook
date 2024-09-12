@@ -13,7 +13,7 @@ export default function Profile() {
 
   const [update, setUpdate] = useState(false);
 
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ["user", userId, update], // Include userId in queryKey so everytime userId changes the queryFn is run again.
     queryFn: async () => {
       try {
@@ -25,7 +25,7 @@ export default function Profile() {
     },
   });
 
-  const { isLoading: isLoadingFollowers, data: followersData } = useQuery({
+  const { data: followersData } = useQuery({
     queryKey: ["followers", userId],
     queryFn: async () => {
       try {
@@ -39,11 +39,7 @@ export default function Profile() {
     },
   });
 
-  const {
-    isLoading: postsAreLoading,
-    error: postsError,
-    data: posts,
-  } = useQuery({
+  const { isLoading: postsAreLoading, data: posts } = useQuery({
     queryKey: ["userPosts", userId, update],
     queryFn: async () => {
       try {
