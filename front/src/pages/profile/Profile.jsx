@@ -17,9 +17,22 @@ export default function Profile() {
     queryKey: ["user", userId, update], // Include userId in queryKey so everytime userId changes the queryFn is run again.
     queryFn: async () => {
       try {
-        console.log("userId: " + userId);
         const res = await axios.get(`/api/users/${userId}`);
         return res.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  });
+
+  const { isLoading: isLoadingFollowers, data: followersData } = useQuery({
+    queryKey: ["followers"],
+    queryFn: async () => {
+      try {
+        const result = await axios.get(
+          "/api/relationships/followers/" + userId
+        );
+        return result.data;
       } catch (err) {
         console.log(err);
       }
@@ -106,7 +119,7 @@ export default function Profile() {
               <span>{moment(data.birthday).format("MMMM DD, YYYY")}</span>
             </div>
             <div className="center">
-              <span>{data.name}</span>
+              <span className="name">{data.name}</span>
               {currentUser.id === data.id ? (
                 <button onClick={() => setShowUpdate(true)}>Update</button>
               ) : (
@@ -120,8 +133,10 @@ export default function Profile() {
               )}
             </div>
             <div className="right">
-              <i className="bi bi-envelope-at-fill"></i>
-              <span className="email">{data.email}</span>
+              <i className="bi bi-people-fill"></i>
+              <span className="followers">
+                {followersData.length} Followers
+              </span>
             </div>
           </div>
           <div className="posts">

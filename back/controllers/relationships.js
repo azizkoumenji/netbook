@@ -76,3 +76,13 @@ export const deleteRelationship = (req, res) => {
     });
   });
 };
+
+export const getFollowers = (req, res) => {
+  const q =
+    "select u.* from users u join relationships on followed_user_id = ? and follower_user_id = u.id";
+
+  db.query(q, [req.params.id], (err, data) => {
+    if (err) return res.status(500).json(err);
+    return res.status(200).json(data);
+  });
+};

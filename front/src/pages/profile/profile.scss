@@ -151,7 +151,7 @@
       align-items: center;
       gap: 20px;
 
-      span {
+      .name {
         font-weight: bold;
         text-align: center;
       }
@@ -160,7 +160,7 @@
 
     .left {
       display: flex;
-      justify-content: start;
+      justify-content: center;
       align-items: center;
       gap: 10px;
 
@@ -171,14 +171,14 @@
 
     .right {
       display: flex;
-      justify-content: end;
+      justify-content: center;
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
 
-      .email {
-        font-size: 12px;
+      .followers {
         display: block;
+        font-size: 12px;
       }
     }
 
