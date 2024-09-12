@@ -26,7 +26,7 @@ export default function Profile() {
   });
 
   const { isLoading: isLoadingFollowers, data: followersData } = useQuery({
-    queryKey: ["followers"],
+    queryKey: ["followers", userId],
     queryFn: async () => {
       try {
         const result = await axios.get(
