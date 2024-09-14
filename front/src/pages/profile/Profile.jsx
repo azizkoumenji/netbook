@@ -131,7 +131,7 @@ export default function Profile() {
             <div className="right">
               <i className="bi bi-people-fill"></i>
               <span className="followers">
-                {followersData.length} Followers
+                {followersData && followersData.length} Followers
               </span>
             </div>
           </div>
