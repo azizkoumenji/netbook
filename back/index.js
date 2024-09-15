@@ -19,6 +19,8 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
 
+const __dirname = path.resolve(path.dirname(fileURLToPath(import.meta.url)));
+
 const app = express();
 const server = createServer(app); // This used because of Socket.io.
 const io = new Server(server, {
@@ -34,7 +36,9 @@ app.use(
     credentials: true, // Allows cookies to be sent with requests.
   })
 );
+// Handle root route by using the client build when server is hosted.
 app.use(express.static("dist"));
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -47,6 +51,11 @@ app.use("/api/uploads", uploadsRouter);
 app.use("/api/relationships", relationshipsRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/messages", messagesRouter);
+
+// Catch-all route to serve index.html for client-side routing when refresh page when server is hosted.
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "dist", "index.html"));
+});
 
 // Socket.io
 let activeUsers = [];
@@ -89,9 +98,6 @@ mongoose
     console.log("Connected to MongoDB!");
 
     // Create uploads directory if it doesn't exist and add cover and profile images.
-    const __dirname = path.resolve(
-      path.dirname(fileURLToPath(import.meta.url))
-    );
     const uploadsPath = path.join(__dirname, "uploads");
     if (!fs.existsSync(uploadsPath)) {
       fs.mkdirSync(uploadsPath);
