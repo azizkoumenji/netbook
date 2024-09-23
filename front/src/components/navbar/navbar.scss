@@ -25,6 +25,10 @@
       color: var(--text-dark);
     }
 
+    .search-mobile-icon {
+      display: none;
+    }
+
 
     .logo {
 
@@ -146,6 +150,84 @@
   }
 }
 
+.search-backdrop {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+
+  .search-mobile {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-dark);
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 10px;
+    align-items: center;
+    position: sticky;
+    top: 65px;
+    margin: 0 20px;
+    z-index: 2;
+
+
+    .search-bar {
+      width: fit-content;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--background-inside);
+      padding: 5px;
+      border-radius: 5px;
+      gap: 5px;
+
+      i {
+        color: var(--text-light);
+      }
+
+      input {
+        border: none;
+        background-color: var(--background-inside);
+        outline: none;
+        color: var(--text-dark);
+
+        font-family: "Inter",
+          sans-serif;
+
+        &::placeholder {
+          color: var(--text-light);
+        }
+      }
+    }
+
+    .search-results {
+      width: 100%;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .no-result {
+        text-align: center;
+        color: var(--text-light);
+      }
+
+      .result {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        img {
+          height: 30px;
+          width: 30px;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 640px) {
   .logo {
     display: none;
@@ -154,7 +236,13 @@
   .navbar {
     .left {
       position: relative;
+
+      .search-mobile-icon {
+        display: block;
+      }
     }
+
+
 
     .search {
       display: none;
@@ -162,6 +250,8 @@
   }
 
   .right {
+
+
     span {
       display: none;
     }
@@ -171,8 +261,6 @@
     }
   }
 }
-
-@media (max-width: 768px) {}
 
 @media (min-width: 1024px) {
   .navbar {
