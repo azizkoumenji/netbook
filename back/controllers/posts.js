@@ -11,11 +11,10 @@ export const getPosts = (req, res) => {
     if (err) return res.status(403).json("Invalid token.");
 
     const q =
-      "select distinct p.*, u.name, u.profile_pic from posts p join users u on u.id = p.user_id  join relationships on followed_user_id = p.user_id where follower_user_id = ? or p.user_id = ?  order by date desc";
+      "select p.*, u.name, u.profile_pic from posts p join users u on u.id = p.user_id  left join relationships on followed_user_id = p.user_id and follower_user_id = ? where follower_user_id = ? or p.user_id = ? order by date desc";
 
-    db.query(q, [userInfo.id, userInfo.id], (err, data) => {
+    db.query(q, [userInfo.id, userInfo.id, userInfo.id], (err, data) => {
       if (err) return res.status(500).json(err);
-
       return res.status(200).json(data);
     });
   });
