@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
@@ -13,35 +13,46 @@ export default function NavBar() {
   const [showNoResult, setShowNoResult] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
 
-  const handleSearch = async (e) => {
-    setSearchKey(e.target.value);
-    if (e.target.value === "") {
-      setSearchResults([]);
-      setShowNoResult(false);
-      setTimeout(() => {
-        setSearchResults([]);
-        setShowNoResult(false);
-      }, 1000); // Used a timeout to fix a state glitch when I long press delete button.
-      setTimeout(() => {
-        setSearchResults([]);
-        setShowNoResult(false);
-      }, 3000);
-    } else {
-      try {
-        const res = await axios.post("/api/users/", {
-          searchKey: e.target.value,
-        });
+  console.log(searchKey);
+  console.log(searchResults);
 
-        if (res.data.length === 0) {
-          setShowNoResult(true);
-        } else {
-          setShowNoResult(false);
+  useEffect(() => {
+    const source = axios.CancelToken.source();
+    const search = async () => {
+      if (!searchKey) {
+        setSearchResults([]);
+        setShowNoResult(false);
+      } else {
+        try {
+          const res = await axios.post(
+            "/api/users/",
+            {
+              searchKey: searchKey,
+            },
+            { cancelToken: source.token }
+          );
+
+          if (res.data.length === 0) {
+            setShowNoResult(true);
+          } else {
+            setShowNoResult(false);
+          }
+          setSearchResults(res.data);
+        } catch (err) {
+          console.log(err);
         }
-        setSearchResults(res.data);
-      } catch (err) {
-        console.log(err);
       }
-    }
+    };
+
+    search();
+
+    return () => {
+      source.cancel("Request canceled by user");
+    };
+  }, [searchKey]);
+
+  const handleSearch = (e) => {
+    setSearchKey(e.target.value);
   };
 
   return (
