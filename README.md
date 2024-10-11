@@ -4,7 +4,7 @@ You can visit the website using this link: https://netbook-production.up.railway
 - Real time messaging
 - Image Upload for posts
 - Online Indicator
-- Following & Unfollowing users
+- Following & unfollowing users
 - Users suggestions
 - User search
 - Likes & comments for posts
