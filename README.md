@@ -3,7 +3,7 @@ You can visit the website using this link: https://netbook-production.up.railway
 ### Features:
 - Real time messaging
 - Image upload for posts
-- Online indicator
+- Online status indicator
 - Following & unfollowing users
 - Users suggestions
 - User search
