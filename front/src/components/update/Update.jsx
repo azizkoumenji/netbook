@@ -18,6 +18,7 @@ export default function Update({ setShowUpdate, setUpdate, update, userId }) {
   });
   const [profileCheck, setProfileCheck] = useState(false);
   const [coverCheck, setCoverCheck] = useState(false);
+  const [spinner, setSpinner] = useState(false);
 
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -65,6 +66,7 @@ export default function Update({ setShowUpdate, setUpdate, update, userId }) {
   });
 
   const handleSave = async () => {
+    setSpinner(true);
     const coverLink = await upload(cover);
     const profilePicLink = await upload(profilePic);
     const user = {
@@ -81,6 +83,7 @@ export default function Update({ setShowUpdate, setUpdate, update, userId }) {
       JSON.stringify({ id: currentUser.id, ...user })
     );
     updateCurrUser();
+    setSpinner(false);
     setShowUpdate(false);
     setUpdate(!update);
   };
@@ -88,82 +91,88 @@ export default function Update({ setShowUpdate, setUpdate, update, userId }) {
   return (
     <div className="background-update" onClick={() => setShowUpdate(false)}>
       <div className="card-update" onClick={(e) => e.stopPropagation()}>
-        <label htmlFor="cover_pic" className="label-upload">
-          <div>
-            <i className="bi bi-image"></i> Upload new cover picture
-          </div>
-          {coverCheck && <i className="bi bi-check-circle check"></i>}
-        </label>
+        {spinner ? (
+          <div className="loader"></div>
+        ) : (
+          <>
+            <label htmlFor="cover_pic" className="label-upload">
+              <div>
+                <i className="bi bi-image"></i> Upload new cover picture
+              </div>
+              {coverCheck && <i className="bi bi-check-circle check"></i>}
+            </label>
 
-        <label htmlFor="profile_pic" className="label-upload">
-          <div>
-            <i className="bi bi-image"></i> Upload new profile picture
-          </div>
-          {profileCheck && <i className="bi bi-check-circle check"></i>}
-        </label>
+            <label htmlFor="profile_pic" className="label-upload">
+              <div>
+                <i className="bi bi-image"></i> Upload new profile picture
+              </div>
+              {profileCheck && <i className="bi bi-check-circle check"></i>}
+            </label>
 
-        <input
-          type="file"
-          name="cover_pic"
-          id="cover_pic"
-          style={{ display: "none" }}
-          onChange={(e) => {
-            setCover(e.target.files[0]);
-            setCoverCheck(true);
-          }}
-        />
+            <input
+              type="file"
+              name="cover_pic"
+              id="cover_pic"
+              style={{ display: "none" }}
+              onChange={(e) => {
+                setCover(e.target.files[0]);
+                setCoverCheck(true);
+              }}
+            />
 
-        <input
-          type="file"
-          id="profile_pic"
-          name="profile_pic"
-          style={{ display: "none" }}
-          onChange={(e) => {
-            setProfilePic(e.target.files[0]);
-            setProfileCheck(true);
-          }}
-        />
+            <input
+              type="file"
+              id="profile_pic"
+              name="profile_pic"
+              style={{ display: "none" }}
+              onChange={(e) => {
+                setProfilePic(e.target.files[0]);
+                setProfileCheck(true);
+              }}
+            />
 
-        <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name</label>
 
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={inputs.name}
-          onChange={handleChange}
-        />
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={inputs.name}
+              onChange={handleChange}
+            />
 
-        <label htmlFor="username">Username</label>
+            <label htmlFor="username">Username</label>
 
-        <input
-          type="text"
-          name="username"
-          placeholder="Userame"
-          value={inputs.username}
-          onChange={handleChange}
-        />
+            <input
+              type="text"
+              name="username"
+              placeholder="Userame"
+              value={inputs.username}
+              onChange={handleChange}
+            />
 
-        <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email</label>
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={inputs.email}
-          onChange={handleChange}
-        />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={inputs.email}
+              onChange={handleChange}
+            />
 
-        <label htmlFor="birthday">Birthday</label>
+            <label htmlFor="birthday">Birthday</label>
 
-        <input
-          type="date"
-          name="birthday"
-          value={inputs.birthday}
-          onChange={handleChange}
-        />
+            <input
+              type="date"
+              name="birthday"
+              value={inputs.birthday}
+              onChange={handleChange}
+            />
 
-        <button onClick={handleSave}>Save</button>
+            <button onClick={handleSave}>Save</button>
+          </>
+        )}
       </div>
     </div>
   );

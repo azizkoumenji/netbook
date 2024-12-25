@@ -1,12 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Post from "../../components/post/Post";
 import "./profile.scss";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import { useContext, useState } from "react";
+import { lazy, Suspense, useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import moment from "moment";
 import Update from "../../components/update/Update";
+
+const Post = lazy(() => import("../../components/post/Post"));
 
 export default function Profile() {
   const userId = useLocation().pathname.split("/")[2]; // useLocation().pathname returns our link.
@@ -141,7 +142,11 @@ export default function Profile() {
             ) : posts.length === 0 ? (
               <span className="no-posts">No posts</span>
             ) : (
-              posts.map((post) => <Post post={post} key={post.id} />)
+              posts.map((post) => (
+                <Suspense key={post.id}>
+                  <Post post={post} />
+                </Suspense>
+              ))
             )}
           </div>
         </div>
