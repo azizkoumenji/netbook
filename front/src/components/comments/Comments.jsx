@@ -15,6 +15,7 @@ export default function Comments({ postId }) {
     queryFn: async () => {
       try {
         const res = await axios.get(`/api/comments/${postId}`);
+        setSpinner(false);
         return res.data;
       } catch (err) {
         console.log(err);
@@ -38,7 +39,6 @@ export default function Comments({ postId }) {
 
     onSuccess: () => {
       queryClient.invalidateQueries(["comments", postId]);
-      setSpinner(false);
       queryClient.invalidateQueries(["commentsCount", postId]);
     },
   });
