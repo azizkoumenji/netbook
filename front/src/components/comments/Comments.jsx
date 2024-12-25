@@ -9,6 +9,7 @@ import moment from "moment";
 export default function Comments({ postId }) {
   const { currentUser } = useContext(AuthContext);
   const [comment, setComment] = useState("");
+  const [spinner, setSpinner] = useState(false);
   const { isLoading, error, data } = useQuery({
     queryKey: ["comments", postId],
     queryFn: async () => {
@@ -27,6 +28,7 @@ export default function Comments({ postId }) {
     mutationFn: async (comment) => {
       if (comment.comment) {
         try {
+          setSpinner(true);
           return await axios.post(`/api/comments/${postId}`, comment);
         } catch (err) {
           console.log(err);
@@ -36,6 +38,7 @@ export default function Comments({ postId }) {
 
     onSuccess: () => {
       queryClient.invalidateQueries(["comments", postId]);
+      setSpinner(false);
       queryClient.invalidateQueries(["commentsCount", postId]);
     },
   });
@@ -66,6 +69,8 @@ export default function Comments({ postId }) {
         <div className="loader"></div>
       ) : error ? (
         <span className="error">Something went wrong :(</span>
+      ) : spinner ? (
+        <div className="loader"></div>
       ) : (
         data.map((comment) => (
           <div className="comment" key={comment.id}>
