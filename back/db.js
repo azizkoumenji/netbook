@@ -3,7 +3,7 @@ import { readFileSync } from "fs";
 
 const db = mysql2.createConnection({
   host: process.env.HOST,
-  user: process.env.USER,
+  user: process.env.DB_USER,
   port: process.env.PORT,
   password: process.env.PASSWORD,
   ssl: {

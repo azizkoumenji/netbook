@@ -4,6 +4,7 @@ import { AuthContext } from "../../context/authContext";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Compressor from "compressorjs";
 
 export default function Update({ setShowUpdate, setUpdate, update, userId }) {
   const [cover, setCover] = useState(null);
@@ -26,10 +27,21 @@ export default function Update({ setShowUpdate, setUpdate, update, userId }) {
     if (img) {
       try {
         const formData = new FormData();
-        formData.append("img", img);
-        const imgName = await axios.post("/api/uploads", formData);
-        const imgLink = "/api/uploads/" + imgName.data;
-        return imgLink;
+        return new Promise((resolve, reject) => {
+          new Compressor(img, {
+            quality: 0.6,
+            success: async (compressedResult) => {
+              formData.append("img", compressedResult);
+              try {
+                const imgName = await axios.post("/api/uploads", formData);
+                const imgLink = "/api/uploads/" + imgName.data;
+                resolve(imgLink);
+              } catch (err) {
+                reject(err);
+              }
+            },
+          });
+        });
       } catch (err) {
         console.log(err);
       }

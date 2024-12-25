@@ -1,10 +1,12 @@
-import { useContext, useState } from "react";
-import Post from "../../components/post/Post";
+import { lazy, Suspense, useContext, useState } from "react";
 import "./home.scss";
 import { AuthContext } from "../../context/authContext";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import Suggestions from "../../components/suggestions/Suggestions";
+import Compressor from "compressorjs";
+
+const Post = lazy(() => import("../../components/post/Post"));
 
 export default function Home() {
   const { currentUser } = useContext(AuthContext);
@@ -75,7 +77,12 @@ export default function Home() {
               id="file"
               style={{ display: "none" }}
               onChange={(e) => {
-                setImg(e.target.files[0]);
+                new Compressor(e.target.files[0], {
+                  quality: 0.6,
+                  success: (compressedResult) => {
+                    setImg(compressedResult);
+                  },
+                });
               }}
             />
             <label htmlFor="file" className="image">
@@ -97,7 +104,11 @@ export default function Home() {
             <Suggestions className={"mobile-suggestions"} />
           </>
         ) : (
-          data.map((post) => <Post post={post} key={post.id} />)
+          data.map((post) => (
+            <Suspense key={post.id}>
+              <Post post={post} />
+            </Suspense>
+          ))
         )}
       </div>
     </div>
